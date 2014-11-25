@@ -45,7 +45,7 @@ class Entity:
         + "\n\tFound as number: " + str(self.indexPos)+"\n" )
 
     
-genePat = re.compile("[A-Z|-|:]+[0-9]+")
+genePat = re.compile("[A-Z][A-Z][A-Z|-|:]+([0-9]+)?")
 possibleEntities = []
 
 def r(path,root):
@@ -72,7 +72,6 @@ r([],root)
 sameName = {}
 sameSection = {}
 for ent in possibleEntities:
-    print(ent.path)
     if ent.ent not in sameName:
         nameRepeats = []
         sameName[ent.ent] = nameRepeats
