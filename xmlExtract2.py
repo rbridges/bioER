@@ -5,9 +5,22 @@ from copy import deepcopy as dc
 
 dataFile = open(sys.argv[1],"r")
 dataString = dataFile.read()
+
+def nothing(m):
+    return ""
+def comment(m):
+    return "<!--" +str(m.group(0))+"-->"
+newtext = re.sub("&#x[0-9|A-Z]{4};",comment,dataString)
+newtext = re.sub("\\<ext-link.+\\</ext-link\\>",nothing,newtext)
+newtext = re.sub("<italic>|</italic>",nothing,newtext)
+newtext = re.sub("\\<xref.+\\</xref\\>",nothing,newtext)
+
+
+
 #tree = ET.parse(sys.argv[1])
 #root = tree.getroot()
-root = ET.fromstring(dataString)
+print(newtext)
+root = ET.fromstring(newtext)
 
 
 class Entity:
