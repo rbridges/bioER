@@ -19,7 +19,6 @@ newtext = re.sub("\\<xref.+\\</xref\\>",nothing,newtext)
 
 #tree = ET.parse(sys.argv[1])
 #root = tree.getroot()
-print(newtext)
 root = ET.fromstring(newtext)
 
 
@@ -62,8 +61,8 @@ genePat = re.compile("[A-Z][A-Z][A-Z|-|:]+([0-9]+)?")
 possibleEntities = []
 
 def r(path,root):
-    path.append(root.tag)
-    print(str(dc(path)) +str(root.attrib))
+    path.append(str(root.tag))#+ "~"+str(root.attrib))
+    #print(str(dc(path)) +str(root.attrib))
     for node in root:
         if(node.text == None):
             continue
@@ -84,7 +83,11 @@ def r(path,root):
 r([],root)
 sameName = {}
 sameSection = {}
+killList = ["CONTRIBUTIONS","AUTHOR","RESULTS","DNA","METHODS","INTRODUCTION","QUERIES"]
 for ent in possibleEntities:
+    if ent.ent in killList:
+        del ent
+        continue
     if ent.ent not in sameName:
         nameRepeats = []
         sameName[ent.ent] = nameRepeats
@@ -95,14 +98,39 @@ for ent in possibleEntities:
         sameSection[",".join(ent.path)] = sectionGroup
     sameSection[",".join(ent.path)].append(ent)
 
-print("Uniques: \n")
-for k in sameName:
-    print(k + " has " +str(sameName[k]) +"\n")
 
 
-print("\n\n\n\n\nSection Groups: \n")
-for k in sameSection:
-    print(k + " has " +str(len(sameSection[k])) + " entities\n")
+table = list()
+sections = []
+for ke in sameSection.keys():
+    sections.append(ke)
+
+table.append(sections)
+for sn in sameName:
+    sl=[sn]
+    for ss in sameSection:
+        sl.append(0)
+    table.append(sl)
+    
+
+
+for i,sect in enumerate(sections):
+    ii = i + 1
+    for j,nam in enumerate(sameName):
+        for ent in possibleEntities:
+        #print(str(ent.ent) + " vs. " +str(table[j]
+            if ent.ent == table[ii][0] and ",".join(ent.path) == sect:
+                print("condition!")
+                table[ii][j] = table[i][j]+1
+
+
+
+            
+for l in table:
+    print(l)
+
+    
+    
 
 
         
