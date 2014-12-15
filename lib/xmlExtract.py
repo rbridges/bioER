@@ -82,7 +82,7 @@ def metaDataEntities():
     sameName = {}
     sameSection = {}
     killList = ["CONTRIBUTIONS","REPRODUCTIVE","AUTHOR","RESULTS","DNA",
-                "METHODS","INTRODUCTION","QUERIES"]
+                "METHODS","INTRODUCTION","QUERIES","DISCUSSION"]
     for ent in possibleEntities:
         if ent.ent in killList:
             del ent
@@ -100,9 +100,9 @@ def metaDataEntities():
     return sameName, sameSection
 
 
-
+table = list()
 def tableEm(sameName,sameSection):    
-    table = list()
+    
     sections = []
     for ke in sameSection.keys():
         sections.append(ke)
@@ -125,8 +125,7 @@ def tableEm(sameName,sameSection):
                     table[jj][ii] = int(table[jj][ii]+1)
 
                 
-    for l in table:
-        print(l)
+
 
     
     
