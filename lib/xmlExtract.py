@@ -15,6 +15,7 @@ def cleanXML(dataString):
     newtext = re.sub("\\<ext-link.+\\</ext-link\\>",nothing,newtext)
     newtext = re.sub("<italic>|</italic>",nothing,newtext)
     newtext = re.sub("\\<xref.+\\</xref\\>",nothing,newtext)
+    newtext = re.sub("\\<\\?.+\\?\\>",nothing, newtext)
     return newtext
 
 def getRoot(newtext):
@@ -59,6 +60,13 @@ genePat = re.compile("[A-Z][A-Z][A-Z|-|:]+([0-9]+)?")
 possibleEntities = []
 
 def r(path,root):
+    if(root.tag == "sec"):
+        k = root.attrib.keys()
+        append = root.attrib[k[0]]
+        path.append(str(root.tag)+"="+str(append)+"<br>")
+    else:
+        path.append(str(root.tag))
+        
     path.append(str(root.tag))
     for node in root:
         if(node.text == None):
