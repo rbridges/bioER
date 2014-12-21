@@ -9,13 +9,20 @@ def nothing(m):
     return ""
 def comment(m):
     return "<!--" +str(m.group(0))+"-->"
+def test(m):
+    return "TESTTESTTEST"
 
 def cleanXML(dataString):
     newtext = re.sub("&#x[0-9|A-Z]{4};",comment,dataString)
     newtext = re.sub("\\<ext-link.+\\</ext-link\\>",nothing,newtext)
     newtext = re.sub("<italic>|</italic>",nothing,newtext)
-    newtext = re.sub("\\<xref.+\\</xref\\>",nothing,newtext)
-    newtext = re.sub("\\<\\?.+\\?\\>",nothing, newtext)
+    newtext = re.sub("\\(?\\<xref.+?\\</xref\\>\\)?",nothing,newtext)
+    newtext = re.sub("\\(?\\<sub.+?\\</sub\\>\\)?",nothing,newtext)
+    newtext = re.sub("\\(?\\<bold.+?\\</bold\\>\\)?",nothing,newtext)
+    newtext = re.sub("\\(?\\<caption.+?\\</caption\\>\\)?",nothing,newtext)
+    newtext = re.sub("\\(?\\<graphic.+?\\</graphic\\>\\)?",nothing,newtext)
+    newtext = re.sub("\\(?\\<ext-link.+?\\</ext-link\\>\\)?",nothing,newtext)
+    newtext = re.sub("\\(?\\<label.+?\\</label\\>\\)?",nothing,newtext)
     return newtext
 
 def getRoot(newtext):
@@ -75,7 +82,8 @@ def r(path,root):
             index = float(ind)
             match = genePat.match(word)
             if (genePat.match(word)):
-
+                #print(str(path) + ", " + node.tag + ":\n")
+                #raw_input(node.text + "\n\n")
                 # yes, confusing: path+[node.tag] ... it's the existing path plus the thing you are currently on
                 if ",".join(path+[node.tag]) not in sectionsOrdered:
                     sectionsOrdered.append(",".join(path+[node.tag]) )
