@@ -58,7 +58,7 @@ class Entity:
     
 genePat = re.compile("[A-Z][A-Z][A-Z|-|:]+([0-9]+)?")
 possibleEntities = []
-
+sectionsOrdered = []
 def r(path,root):
     if(root.tag == "sec"):
         k = root.attrib.keys()
@@ -67,7 +67,6 @@ def r(path,root):
     else:
         path.append(str(root.tag))
         
-    path.append(str(root.tag))
     for node in root:
         if(node.text == None):
             continue
@@ -76,6 +75,11 @@ def r(path,root):
             index = float(ind)
             match = genePat.match(word)
             if (genePat.match(word)):
+
+                # yes, confusing: path+[node.tag] ... it's the existing path plus the thing you are currently on
+                if ",".join(path+[node.tag]) not in sectionsOrdered:
+                    sectionsOrdered.append(",".join(path+[node.tag]) )
+                    
                 currentInd = len(possibleEntities)
                 en = Entity(match.group(), (index/textLength),currentInd,dc(path)+[node.tag],"geneEntity")
                 possibleEntities.append(en)
@@ -90,10 +94,12 @@ def metaDataEntities():
     sameName = {}
     sameSection = {}
     killList = ["CONTRIBUTIONS","REPRODUCTIVE","AUTHOR","RESULTS","DNA",
-                "METHODS","INTRODUCTION","QUERIES","DISCUSSION"]
-    for ent in possibleEntities:
+                "METHODS","INTRODUCTION","QUERIES","DISCUSSION","MERISTEM"]
+    deleteList = []
+    for i,ent in enumerate(possibleEntities):
         if ent.ent in killList:
-            del ent
+            #print(possibleEntities[i])
+            deleteList.append(i)
             continue
         if ent.ent not in sameName:
             nameRepeats = []
@@ -105,6 +111,14 @@ def metaDataEntities():
             sameSection[",".join(ent.path)] = sectionGroup
         sameSection[",".join(ent.path)].append(ent)
 
+ 
+    for i in reversed(deleteList):
+        #print(possibleEntities[i])
+        del possibleEntities[i]
+            
+            
+        
+        
     return sameName, sameSection
 
 
@@ -112,27 +126,41 @@ table = list()
 def tableEm(sameName,sameSection):    
     
     sections = []
-    for ke in sameSection.keys():
+    for ke in sectionsOrdered:
         sections.append(ke)
 
+    #print(str(sections) + "\n\n")
+    #raw_input(sectionsOrdered)
     table.append(sections)
     for sn in sameName:
         sl=[sn]
         table.append(sl)
-        for ss in sameSection:
+        for ss in sectionsOrdered:
             sl.append(0)
         
-
+    sanityCheck = 0
+    foundList = []
+    for x,bogus in enumerate(possibleEntities):
+     #   print(bogus.ent)
+        foundList.append(x)
+        
     for i,sect in enumerate(sections):
         ii = i + 1
         for j,nam in enumerate(sameName):
             jj = j + 1
-            for ent in possibleEntities:
-               
-                if (ent.ent == table[jj][0] and ",".join(ent.path) == sect):
+            #raw_input()
+            for k,ent in enumerate(possibleEntities):
+                #print( str(",".join(ent.path)) + "    vs.   " +str(sect))
+                if (ent.ent == table[jj][0] and ",".join(ent.path) == sect ): #
+                    sanityCheck += 1
                     table[jj][ii] = int(table[jj][ii]+1)
+                    foundList.remove(k)
 
-                
+    #print(str(sanityCheck) + "  " + str(len(possibleEntities)))
+
+
+    #for y in foundList:
+     #   print(possibleEntities[y])
 
 
     
