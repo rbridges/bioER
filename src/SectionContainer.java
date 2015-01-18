@@ -18,7 +18,7 @@ public class SectionContainer {
 		n = _n;
 		path = new ArrayList<String> (_path);
 		text = new String(n.getTextContent());
-		System.out.println(n.getNodeName() + " : " + text + " @ " + path);
+	//	System.out.println(n.getNodeName() + " : " + text + " @ " + path);
 		 
 	}
 }

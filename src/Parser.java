@@ -17,7 +17,12 @@ import java.io.File;
 
 public class Parser {
 	Hashtable<Integer, SectionContainer> sections = new Hashtable<Integer, SectionContainer>();
-
+	int number;
+	
+	Parser()
+	{
+		number = 0;
+	}
 	// derived from example at http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
 	public Document domifyDocument()
 		{
@@ -109,9 +114,10 @@ public class Parser {
 	{
 		ArrayList<String> path = new ArrayList<String>();
 		path.add(nodeList.item(0).getNodeName());
-		loadup(nodeList, path, 0);
+		loadup(nodeList, path);
+		number = 0;
 	}
-	private void loadup(NodeList nodeList, ArrayList<String> path, int number)
+	private void loadup(NodeList nodeList, ArrayList<String> path)
 	{
 		for (int count = 0; count < nodeList.getLength(); count++) {
 			
@@ -122,7 +128,7 @@ public class Parser {
 			if (tempNode.hasChildNodes())
 			{
 				path.add(tempNode.getNodeName());
-				loadup(tempNode.getChildNodes(), path, number );
+				loadup(tempNode.getChildNodes(), path );
 			
 				// associate the section number with a SectionContainer with copy of node and the path.
 				// deep copied the node to separate the text and attribute data I want from ""s left to remedy double counting entities
