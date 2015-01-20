@@ -1,20 +1,22 @@
 import java.util.ArrayList;
 
-
+//TODO: how to deal with alias network? Probably don't
+// want it inside Entity class, but want it accessible from
 public class Entity {
 	String text;
-	ArrayList<String> location;
-	double position;
+	SectionContainer location;
+	int position;
 	double probability;
+	Long id; //not sure if this is necessary. EntList will associate an id
 	
 	Entity()
 	{
-		text = "";
-		location = new ArrayList();
+		text = null;
+		location = null;
 		position = -1;
 	}
 	
-	Entity(String _text, ArrayList _location, int _position)
+	Entity(String _text, SectionContainer _location, int _position)
 	{
 		text = _text;
 		location = _location;
@@ -29,31 +31,25 @@ public class Entity {
 		this.text = text;
 	}
 
-	public ArrayList getLocation() {
-		return location;
+	public ArrayList<String> getLocation() {
+		return location.getPath();
 	}
 
-	public void setLocation(ArrayList location) {
-		this.location = location;
+	public void setLocation(ArrayList<String> location) {
+		this.location.setPath(location);
 	}
 
 	public double getPosition() {
 		return position;
 	}
 
-	public void setPosition(double position) {
+	public void setPosition(int position) {
 		this.position = position;
 	}
 	
 	public String toString()
 	{
-		String loc = "";
-		for(String l : location)
-		{
-			loc.concat(l+"/");
-		}
-		
-		return text + "\n" + loc + " @" + position;
+		return text + "\n" + location.toString() + " @" + position;
 	}
 
 	
