@@ -36,7 +36,7 @@ public class CategoryKeywordMatcher extends InclusionRule {
 				continue;
 			}
 			
-			String tokens[] = line.split("-"); 
+			String tokens[] = line.split(" - "); 
 			if(tokens.length == 1)
 			{
 				String slashSeparated[] = tokens[0].split("/");

@@ -8,10 +8,12 @@ public class MetaManager {
 
 		Hashtable<String,Integer> tags;
 		
-		public void process(InclusionRule ir)
+		public void tag(String s)
 		{
-			
-			
+			if(tags.contains(s))
+			{
+				
+			}
 		}
 		
 }

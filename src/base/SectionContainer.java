@@ -40,27 +40,6 @@ public class SectionContainer {
 	
 
 
-
-	// TODO: get rid of this
-	class Section {
-		
-		ArrayList<String> location;
-		
-		Section(){} //TODO: this enables null location. Why do I need it?
-		Section(ArrayList<String> _location)
-		{
-			location = _location;
-		}
-		
-		public ArrayList<String> getSection()
-		{
-			return location;
-		}
-		
-
-		
-	}
-
 	
 	public SectionContainer(Node _n, ArrayList<String> _path)
 	{

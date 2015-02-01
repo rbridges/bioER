@@ -61,4 +61,17 @@ public class EntList {
 		
 	}
 	
+	public void removeEnt(String ent)
+	{
+		// go backwards to do this in one pass without messing up the indexing
+		for(int i = entList.size()-1; i >=0; i--)
+		{
+			if(entList.get(i).getText().equals(ent))
+			{
+				entList.remove(i);	
+			}
+		}
+		
+	}
+	
 }

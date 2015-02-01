@@ -1,0 +1,387 @@
+Research Areas	
+abiotic stress - cold/chilling/freezing
+abiotic stress - drought/water stress
+abiotic stress - flooding/submergence
+abiotic stress - heat/high temperature
+abiotic stress - heavy metals
+abiotic stress - light/photooxidative stress/ROS
+abiotic stress - nutrient stress/limitation
+abiotic stress - salt stress/salinity			
+actin	
+Agrobacterium infection and T-DNA integration 																					
+amino acid biosynthesis/metabolism									
+apomixis
+ascorbate/glutathione/thioredoxin 					
+assimilate allocation/partitioning									
+calcium signaling/transport
+calmodulin
+cell cycle/cell division								
+cell death/programmed cell death
+cell differentiation/cell fate
+cell differentiation/cell fate - polarity and tissue patterning
+cell walls - cell expansion
+cell walls - biosynthesis
+cell walls - cuticle/waxes
+cell walls - other aspects					
+chaperones/molecular chaperones
+chloroplast - bioenergetics
+chloroplast - biogenesis/development/metabolism
+chloroplast - genetics					
+circadian clock									
+climate change																										
+crop yield			
+cytoskeleton																
+defense/disease resistance/immunity
+defense/disease resistance/immunity - responses/signaling
+defense/disease resistance/immunity - pattern-triggered immunity/PTI
+defense/disease resistance/immunity - effector-triggered immunity/ETI
+defense/disease resistance/immunity - systemic acquired resistance
+defense/disease resistance/immunity - hypersensitive response
+defense/disease resistance/immunity - leucine-rich repeat receptor-like kinases/NBS-LRRs
+defense/disease resistance/immunity - phytoalexins
+defense/disease resistance/immunity - pathogenesis
+defense/disease resistance/immunity - bacterial pathogens
+defense/disease resistance/immunity - fungal/oomycete pathogens
+development - general aspects
+development - anthers/pollen/microgametophyte
+development - fertilization
+development - flower development
+development - fruit development
+development - ovule/female gametophyte
+development - seed
+development - embryogenesis/embryo development
+development - root
+development - leaf and stem development
+development - leaf polarity and patterning
+development - compound leaves
+development - trichomes
+development - meristem maintenance
+development - root nodules/nodulation
+DNA repair									
+dormancy
+endomembrane system - autophagy
+endomembrane system - trafficking	
+endomembrane system - secretion/secretory pathway
+endomembrane system - endocytosis
+endomembrane system - exocytosis												
+epigenetics/epigenomics
+epigenetics/epigenomics - imprinting
+epigenetics/epigenomics - nucleolar dominance								
+evolution/evolutionary genetics
+evolution/evolutionary genetics - domestication	
+evolution/evolutionary genetics - polyploidy
+evolution/evolutionary genetics - natural variation
+evolution/evolutionary genetics - angiosperms
+evolution/evolutionary genetics - grasses
+evolution/evolutionary genetics - speciation
+evolution/evolutionary genetics - vascular plants											
+fertilization																		
+flowering time																	
+gene silencing
+gene silencing - RNA-induced silencing
+gene silencing - RNA interference/RNAi
+gene silencing - virus-induced gene silencing/VIGS
+gene silencing - transcriptional gene silencing
+gene silencing - transposon silencing				
+genome organization						
+herbicides - herbicide action									
+heterotrimeric G proteins
+hormones - ABA/abscisic acid
+hormones - auxin
+hormones - brassinosteroids
+hormones - cytokinins
+hormones - ethylene/jasmonates
+hormones - GA/gibberellins
+hormones - peptide hormones
+hormones - salicylic acid
+hormones - strigolactones
+hormones - biosynthesis/mechanism of action/metabolism
+hormones - perception/receptors
+hormones - signaling/crosstalk/downstream pathways														
+ion transport									
+lectins						
+lignin biosynthesis									
+lipid biosynthesis and metabolism									
+long-distance signaling/long-distance trafficking - macromolecules/RNA/proteins
+long-distance signaling/long-distance trafficking - nutrients/ions
+long-distance signaling/long-distance trafficking - viruses													
+male sterility
+MAPK signaling
+membrane biology/membrane function
+membrane biology/membrane function - plasma membrane
+membrane biology/membrane function - mitochondrial membrane
+membrane biology/membrane function - chloroplast membranes
+membrane biology/membrane function - membrane transport
+metabolism
+metabolism - carbohydrates
+metabolism - glycolysis
+metabolism - nitrogen assimilation and metabolism
+metabolism - metabolic regulation
+mitochondria - bioenergetics/respiration
+mitochondria - biogenesis/development/metabolism
+mitochondria - genetics
+nitric oxide/NO signaling									
+nuclear localization/targeting/transport									
+nutrient uptake and metabolism
+organelles - biogenesis/development
+organelles - signaling
+organelles - targeting
+peroxisomes
+photomorphogenesis
+photoreceptors - phytochrome
+photoreceptors - cryptochrome
+photoreceptors - phototropin
+photoreceptors - UVR-8
+photoreceptors - other
+photosynthesis - light reactions
+photosynthesis - photosystems
+photosynthesis - electron transport
+photosynthesis - acclimation/state transitions
+photosynthesis - thylakoid membranes
+photosynthesis - b6f complex
+photosynthesis - ATP synthase
+photosynthesis - carbon reactions/Calvin cycle/C3 photosynthesis
+photosynthesis - Rubisco
+photosynthesis - C4 photosynthesis
+photosynthesis - CAM/crassulacean acid metabolism
+photorespiration
+phytoremediation
+plant-Arthropod interactions
+plant-plant interactions - competition
+plant-plant interactions - parasitism
+plant-virus interactions
+plasmodesmata
+plastid development
+post-transcriptional regulation
+post-transcriptional regulation - RNA processing
+post-transcriptional regulation - mRNA stability/degradation
+post-transcriptional regulation - alternative splicing
+post-transcriptional regulation - RNA interference
+post-translational regulation/modifications
+post-translational regulation/modifications - acetylation
+post-translational regulation/modifications - glycosylation
+post-translational regulation/modifications - hydroxylation
+post-translational regulation/modifications - phosphorylation
+post-translational regulation/modifications - ubiquitination and ubiquitin-like pathways
+protein-protein interactions
+protein traffic/trafficking
+protein turnover/degradation
+protein turnover/degradation - proteolysis/proteolytic processing
+protein turnover/degradation - Proteasome pathway
+receptor kinases									
+recombination/homologous recombination									
+redox homeostasis/redox reactions
+regulatory RNA/non-coding RNA
+regulatory RNA/non-coding RNA - microRNA/miRNA
+regulatory RNA/non-coding RNA - small interfering RNA/siRNA
+regulatory RNA/non-coding RNA - long non-coding RNA
+retrograde pathway/retrograde signaling
+rhizosphere				
+secondary metabolism
+secondary metabolism - anthocyanins
+secondary metabolism - alkaloids
+secondary metabolism - glucosinolates
+secondary metabolism - phenylpropanoids/phenolics
+secondary metabolism - terpenoids/isoprenoids/carotenoids
+secondary metabolism - natural products
+secondary metabolism - quinones							
+self-incompatibility
+self-incompatibility - Brassica
+self-incompatibility - Solanaceae
+senescence
+shade avoidance
+signal transduction - crosstalk
+signal transduction - perception/receptors
+signal transduction - downstream targets/pathways													
+starch metabolism
+stomata/stomatal physiology
+storage metabolism
+sugar-sensing/sugar sensing
+symbiosis
+symbiosis - mycorrhizae
+symbiosis - rhizobial nitrogen fixation
+symbiosis - actinorhizal nitrogen fixation
+symbiosis - lichens
+transcriptional regulation/regulation of transcription - general aspects
+transcriptional regulation/regulation of transcription - transcription factors
+transcriptional regulation/regulation of transcription - promoters and enhancers
+transcriptional regulation/regulation of transcription - chromatin remodeling
+translation - protein synthesis
+translation - regulation
+translation - tRNA
+translation - ribosomes
+transposable elements/transposons
+tropisms - gravitropism /gravity sensing
+tropisms - phototropism
+tropisms - thigmotropism
+tropisms - other
+vacuoles - biogenesis/development
+vacuoles - function/trafficking
+vascular development - general
+vascular development - phloem development
+vascular development - xylogenesis/xylem development
+volatile compounds
+volatile compounds - pollination
+volatile compounds - competition
+volatile compounds - defense
+water relations
+water relations - permeability
+water relations - uptake
+water relations - transport
+water relations - tranpiration
+water relations - channels/aquaporins
+
+Research Methods
+Agrobacterium - methods
+cell sorting	
+Chromatin immunoprecipiation/ChIP-chip/ChIP-seq
+computational modeling	
+enzymology - general
+enzymology - kinetic analysis/kinetic modeling
+epigenetics and epigenomics - chromatin modification
+epigenetics and epigenomics - mapping
+FISH/fluorescence in situ hybridization
+genome editing	
+genome organization - physical mapping
+genome organization - genetic mapping
+genome organization - comparative genomics
+genome organization - linkage analysis/linkage disequilibrium
+genome sequencing/annotation
+image analysis
+image analysis - fluorescence imaging
+image analysis - high-throughput image analysis	
+ionomics
+mass spectrometry
+metabolomics/metabolite profiling									
+microscopy - confocal
+microscopy - optical
+microscopy - SEM
+microscopy - TEM
+network analysis/modeling - gene networks
+network analysis/modeling - metabolic networks	
+next-generation sequencing
+patch-clamp techniques	
+plant breeding and biotechnology
+plant breeding and biotechnology - haploid techniques
+plant breeding and biotechnology - micropropagation
+plant breeding and biotechnology - molecular breeding
+plant breeding and biotechnology - introgression/introgression lines	
+protein structure analysis
+protein structure analysis - x-ray crystallography
+protein structure analysis - nuclear magnetic resonance
+protein structure analysis - computational prediction
+proteomics									
+quantitative genetics
+quantitative genetics - QTL analysis/QTL mapping
+quantitative genetics - phylogenetic analysis
+quantitative genetics - comparative genomics
+quantitative genetics - genome-wide association study/GWAS
+RNA-Seq
+statistics - large-scale biology
+statistics - genetics
+statistics - general
+transcriptomics/transcriptome analysis
+
+Research Organisms
+Agrobacterium
+algae
+algae - bluegreen/cyanobacteria
+algae - green/chlorophytes
+algae - other	
+Antirrhinum/snapdragon									
+Arabidopsis
+bacterial pathogens - Agrobacterium
+bacterial pathogens - Erwinia
+bacterial pathogens - Pseudomonas
+bacterial pathogens - Ralstonia
+bacterial pathogens - Xanthomonas	
+barley									
+Brassica/Brassicaceae
+bryophytes/Bryophyta	
+Chlamydomonas
+conifers									
+cotton/Gossypium
+diatoms	
+ferns
+fungal pathogens - Blumeria
+fungal pathogens - Botrytis
+fungal pathogens - Fusarium
+fungal pathogens - Magnaporthe
+fungal pathogens - Puccinia
+fungal pathogens - Rhizoctonia
+fungal pathogens - Ustilago
+fungal pathogens - Verticillium
+fungi - other	
+grasses									
+gymnosperms
+legumes	
+maize/Zea maize	
+Medicago
+Nicotiana
+oomycete pathogens - Hyaloperonospora
+oomycete pathogens - Phytophthera
+oomycete pathogens - Pythium
+oomycete - other
+petunia									
+Phaseolus/common bean									
+Physcomitrella	
+poplar/Populus
+potato/Solanum tuberosum
+rice/Oryza
+sorghum									
+soybean/Glycine max	
+tobacco/Nicotiana									
+tomato/Solanum lycopersicum															
+trees
+wheat
+
+	
+								
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									

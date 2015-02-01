@@ -15,7 +15,7 @@ public class AnnotatableDocument {
 	private EntList eList;
 	private Hashtable<String,Integer> metaData;
 	
-	AnnotatableDocument(Node d)
+	AnnotatableDocument(Node d, String type)
 	{
 		sections = new Hashtable<Integer, SectionContainer>();
 		getSections(d);
@@ -76,6 +76,10 @@ public class AnnotatableDocument {
 	}
 	public void addEntity(){}
 	
+	public void removeEntity(String ent)
+	{
+		eList.removeEnt(ent);
+	}
 	public void addMetaData(String category)
 	{
 		if(!metaData.contains(category) )
@@ -85,6 +89,11 @@ public class AnnotatableDocument {
 		}
 		int frequency = metaData.get(category);
 		metaData.put(category, ++frequency);
+	}
+	
+	public Hashtable<String, Integer> getMetaData()
+	{
+		return metaData;
 	}
 	
 }

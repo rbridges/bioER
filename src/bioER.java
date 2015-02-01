@@ -9,8 +9,9 @@ import java.util.Scanner;
 import org.w3c.dom.Document;
 
 import base.AnnotatableDocument;
+import base.Annotator;
 import base.EntList;
-import base.EntManager;
+//import base.EntManager;
 import base.Entity;
 import base.DocumentParser;
 
@@ -18,18 +19,7 @@ import base.DocumentParser;
 public class bioER {
 	public static void main(String argv[])
 	{
-		Scanner scan = new Scanner(System.in);
-		DocumentParser p = new DocumentParser();
-		AnnotatableDocument d = p.getAnnotatableDoc(scan.next());
-		//d = p.copy(d);
-		//p.printNode(d);
-		
-		
-		for (int i = 0; i<d.getSections().size();i++)
-		{
-			System.out.println( d.getSections().get(i).getN().getTextContent() );
-		}
-		//demo(p);
+		demo2();
 	}
 	
 	
@@ -61,4 +51,31 @@ public class bioER {
 //			System.out.println(e);
 //		}
 //		}
+	
+	public static void demo2()
+	{
+		Scanner scan = new Scanner(System.in);
+		DocumentParser p = new DocumentParser();
+		Annotator annotator = new Annotator();
+		System.out.println("Give an xml or gml filename: ");
+		AnnotatableDocument d = p.getAnnotatableDoc(scan.next());
+		
+		annotator.annotate(d, "rules/regexPatterns.txt" );
+		annotator.remove(d, "rules/killList.txt");
+		annotator.metaData(d, "rules/keywords.txt");
+		
+		for(Entity e : d.getEntList() )
+		{
+			System.out.println(e+"\n");
+		}
+		
+		Hashtable<String, Integer> metadata = d.getMetaData();
+		for(String s : metadata.keySet() )
+		{
+			System.out.println(s+" has mentions: "+metadata.get(s));
+		}
+		
+		
+		
+	}
 }
