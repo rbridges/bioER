@@ -14,12 +14,14 @@ import base.EntList;
 //import base.EntManager;
 import base.Entity;
 import base.DocumentParser;
+import base.Visualizer;
 
 
 public class bioER {
 	public static void main(String argv[])
 	{
-		demo2();
+		//demo2();
+		demo3();
 	}
 	
 	
@@ -75,6 +77,24 @@ public class bioER {
 			System.out.println(s+" has mentions: "+metadata.get(s));
 		}
 		
+	}
+	
+	public static void demo3()
+	{
+		Scanner scan = new Scanner(System.in);
+		DocumentParser p = new DocumentParser();
+		Annotator annotator = new Annotator();
+		
+		Visualizer v = new Visualizer();
+		
+		System.out.println("Give an xml or gml filename: ");
+		AnnotatableDocument d = p.getAnnotatableDoc(scan.next());
+		
+		annotator.annotate(d, "rules/regexPatterns.txt" );
+		annotator.remove(d, "rules/killList.txt");
+		annotator.metaData(d, "rules/keywords.txt");
+		
+		v.makeTable(d, "tableOutput.html");
 		
 		
 	}

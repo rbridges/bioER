@@ -63,6 +63,7 @@ public class Annotator {
 		
 	}
 
+	//TODO This is unnecessary
 	private void metaData(AnnotatableDocument aDoc, CategoryKeywordMatcher ckm, String token)
 	{
 
@@ -140,6 +141,15 @@ public class Annotator {
 					{
 						ad.getEntList().add( new Entity(t[i], sc, i) );
 					}
+					
+					//HARDCODED ITALICS GRABBER
+					ArrayList<String> a = sc.getPath();
+					if(a.get( a.size()-1 ).equals("it") )
+					{
+						ad.getItalicsList().add( new Entity(t[i], sc, i) );
+					}
+					////
+					
 				}	
 			}
 		}

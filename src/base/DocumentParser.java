@@ -38,6 +38,7 @@ public class DocumentParser {
 			Document d = null;
 			DocumentBuilder builder = null;
 			InputStream is = cleanInputStream(fileName);
+			//InputStream is = fakeInputStream(fileName);
 			
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();	
 			try
@@ -59,6 +60,46 @@ public class DocumentParser {
 		return new AnnotatableDocument(d,"smgl?");
 	}
 	
+	private InputStream fakeInputStream(String fileName)
+	{
+		ArrayList<String> fileStuff = null;
+		StringBuilder sb = new StringBuilder();
+		String type = null;
+		
+		try {
+			fileStuff = (ArrayList<String>)Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		for(String line : fileStuff)
+		{
+			if(line.contains("doctype"))
+			{
+				type = "sgml";
+				line = line.replace("doctype", "DOCTYPE").
+						replace("public","PUBLIC").
+						replace("[]"," \"dtds/journalpublishing.dtd\"");
+			}
+			else if(line.contains("DOCTYPE"))
+			{
+				type = "xml";
+				if(!line.contains("dtds/journalpublishing.dtd"))
+				{
+					line = line.replace("journalpublishing.dtd","dtds/journalpublishing.dtd");
+				}
+			}
+				
+			
+			sb.append(line);
+		}
+	
+		
+		return new ByteArrayInputStream(sb.toString().getBytes());
+		
+		
+	}
 	//TODO: sustainable conversion
 	private InputStream cleanInputStream(String fileName)
 	{

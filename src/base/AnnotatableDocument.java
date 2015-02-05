@@ -15,6 +15,8 @@ public class AnnotatableDocument {
 	private EntList eList;
 	private Hashtable<String,Integer> metaData;
 	
+	private EntList italicsList;
+	
 	AnnotatableDocument(Node d, String type)
 	{
 		sections = new Hashtable<Integer, SectionContainer>();
@@ -23,6 +25,8 @@ public class AnnotatableDocument {
 		
 		eList = new EntList( d.getLocalName() );
 		metaData = new Hashtable<String, Integer>();
+		
+		italicsList = new EntList( "italics" );
 	}
 	
 	private void getSections(Node d)
@@ -73,6 +77,10 @@ public class AnnotatableDocument {
 	public ArrayList<Entity> getEntList()
 	{
 		return eList.getEntList();
+	}
+	public ArrayList<Entity> getItalicsList()
+	{
+		return italicsList.getEntList();
 	}
 	public void addEntity(){}
 	
