@@ -4,11 +4,11 @@ import java.util.ArrayList;
 //TODO: how to deal with alias network? Probably don't
 // want it inside Entity class, but want it accessible from
 public class Entity {
-	String text;
-	SectionContainer location;
-	int position;
-	double probability;
-	Long id; //not sure if this is necessary. EntList will associate an id
+	private String text;
+	private SectionContainer location;
+	private int position;
+	private double probability;
+	private Long id; //not sure if this is necessary. EntList will associate an id
 	
 	Entity()
 	{
@@ -53,6 +53,9 @@ public class Entity {
 		return text + "\n" + location.toString() + " @" + position;
 	}
 
-	
+	public int getSectionNumber()
+	{
+		return location.getSectionNumber();
+	}
 	
 }

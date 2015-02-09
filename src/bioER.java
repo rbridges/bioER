@@ -98,4 +98,25 @@ public class bioER {
 		
 		
 	}
+	
+	public static void demo4()
+	{
+		Scanner scan = new Scanner(System.in);
+		DocumentParser p = new DocumentParser();
+		Annotator annotator = new Annotator();
+		
+		Visualizer v = new Visualizer();
+		
+		System.out.println("Give an xml or gml filename: ");
+		AnnotatableDocument d = p.getAnnotatableDoc(scan.next());
+		
+		annotator.annotate(d, "rules/regexPatterns.txt" );
+		annotator.remove(d, "rules/killList.txt");
+		annotator.metaData(d, "rules/keywords.txt");
+		
+		for(Entity e : d.getEntList())
+		{
+			System.out.println(d.eList.getByName(e.getText()) );
+		}
+	}
 }

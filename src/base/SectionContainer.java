@@ -8,14 +8,11 @@ public class SectionContainer {
 	private Node n;
 	private ArrayList<String> path;
 	private String text;
-	
-	public Node getN() {
-		return n;
-	}
-
-	public void setN(Node n) {
-		this.n = n;
-	}
+	private int sectionNumber;
+//	
+//	public Node getN() {
+//		return n;
+//	}
 
 	public ArrayList<String> getPath() {
 		return path;
@@ -32,6 +29,11 @@ public class SectionContainer {
 	public void setText(String text) {
 		this.text = text;
 	}
+	
+	public int getSectionNumber()
+	{
+		return sectionNumber;
+	}
 
 	class stats
 	{
@@ -41,9 +43,10 @@ public class SectionContainer {
 
 
 	
-	public SectionContainer(Node _n, ArrayList<String> _path)
+	public SectionContainer(Node _n, ArrayList<String> _path, int _sectionNumber)
 	{
 		n = _n;
+		sectionNumber = _sectionNumber;
 		path = new ArrayList<String> (_path);
 		text = new String(n.getTextContent());
 	//	System.out.println(n.getNodeName() + " : " + text + " @ " + path);

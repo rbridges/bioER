@@ -139,14 +139,14 @@ public class Annotator {
 				{
 					if( ((InclusionRule) r).isEnt(t[i]))
 					{
-						ad.getEntList().add( new Entity(t[i], sc, i) );
+						ad.addEntity( new Entity(t[i], sc, i) ,"regular");
 					}
 					
 					//HARDCODED ITALICS GRABBER
 					ArrayList<String> a = sc.getPath();
 					if(a.get( a.size()-1 ).equals("it") )
 					{
-						ad.getItalicsList().add( new Entity(t[i], sc, i) );
+						ad.addEntity( new Entity(t[i], sc, i) ,"italics");
 					}
 					////
 					

@@ -1,20 +1,36 @@
 package base;
 import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 
 
 public class EntList {
 	
 	private String whichList;
+	private Hashtable<Integer,Entity> entTable; //HT so that we can remove without ruining indexing
+	private int addEntIndex;
 	private ArrayList<Entity> entList;
-	private Hashtable<String, Integer> nameIndex;
-	private Hashtable<String, Integer> sectionIndex;
+	private Hashtable<String, ArrayList<Integer> > nameIndex;
+	private Hashtable<String, ArrayList<Integer> > sectionIndex;
+	private Hashtable<Integer, ArrayList<Integer> > integerSectionIndex;
 	
 	//setters intentionally omitted
 	public String getListName() {
 		return whichList;
 	}
+	
+	//TODO: not threadsafe?-- there is one global handle to entList, and this changes then distributes it
 	public ArrayList<Entity> getEntList() {
+		Enumeration<Entity> values = entTable.elements();
+		// omitting an equals check, because you'd have to do an O(N) check anyway?
+		
+		entList.clear();
+		while(values.hasMoreElements())
+		{
+			entList.add( values.nextElement() );
+		}
 		return entList;
 	}
 
@@ -23,53 +39,97 @@ public class EntList {
 	EntList(String name)
 	{
 		whichList = name;
+		entTable = new Hashtable<Integer,Entity>();
+		addEntIndex = 0;
+		
 		entList = new ArrayList<Entity>();
-		nameIndex = new Hashtable<String, Integer>();
-		sectionIndex = new Hashtable<String, Integer>();
+		nameIndex = new Hashtable<String, ArrayList<Integer> >();
+		sectionIndex = new Hashtable<String, ArrayList<Integer> >();
+		
+		integerSectionIndex = new Hashtable<Integer, ArrayList<Integer> >();
 	}
 	
 	public Entity getByIndex(int index)
 	{
-		return entList.get(index);
+		return entTable.get(index);
 	}
-	public Entity getByName(String name)
+	public ArrayList<Entity> getByName(String name)
 	{
-		int index = nameIndex.get(name);
-		return entList.get(index);
+		ArrayList<Entity> ret = new ArrayList<Entity>();
+		ArrayList<Integer> entsWithName = nameIndex.get(name);
+		for(Integer i : entsWithName)
+		{
+			ret.add(entTable.get(i));
+		}
+		return ret;
+//		int index = nameIndex.get(name);
+//		return entList.get(index);
 	}
-	public Entity getBySection(String section)
+	
+	
+	public ArrayList<Entity> getBySection(String section)
 	{
-		int index = sectionIndex.get(section);
-		return entList.get(index);
+		ArrayList<Entity> ret = new ArrayList<Entity>();
+		ArrayList<Integer> entsInSection = sectionIndex.get(section);
+		for(Integer i : entsInSection)
+		{
+			ret.add(entTable.get(i));
+		}
+		return ret;
 	}
-	public Entity getBySection(SectionContainer section)
+	public ArrayList<Entity> getBySection(SectionContainer section)
 	{
-		String strSection = section.toString();
-		int index = nameIndex.get(strSection);
-		return entList.get(index);
+		return getBySection(section.toString());
 	}
+//	public ArrayList<Entity> getByUniqueSection(int sectionNumber)
+//	{
+//		
+//	}
 	
 	public void addEnt(Entity ent)
 	{
-		int nextIndex = entList.size();
 		
-		//TODO: need to deal with collisions :( 
-		nameIndex.put(ent.getText(), nextIndex);
-		sectionIndex.put(ent.getLocation().toString(), nextIndex);
 		
-		entList.add(ent);
+		// if this is the first entity with that name, put a new list with that entity
+		if(! nameIndex.containsKey(ent.getText()))
+		{
+			ArrayList<Integer> newList = new ArrayList<Integer>();
+			newList.add(addEntIndex);
+			nameIndex.put(ent.getText(), newList);
+		}
+		//otherwise, simply add the ent to the existing list
+		else{ nameIndex.get(ent.getText()).add(addEntIndex); }
 		
+		
+		if(! sectionIndex.containsKey(ent.getLocation().toString()))
+		{
+			ArrayList<Integer> newList = new ArrayList<Integer>();
+			newList.add(addEntIndex);
+			sectionIndex.put(ent.getText(), newList);
+		}
+		else{ sectionIndex.get(ent.getLocation().toString()).add(addEntIndex); }
+		
+		if(! integerSectionIndex.containsKey(ent.getSectionNumber()))
+		{
+			ArrayList<Integer> newList = new ArrayList<Integer>();
+			newList.add(addEntIndex);
+			integerSectionIndex.put(ent.getSectionNumber(), newList);
+		}
+		else{ integerSectionIndex.get(ent.getSectionNumber()).add(addEntIndex); }
+		
+		
+		
+		//now that we've indexed by name and section, just add to the master list
+		entTable.put(addEntIndex++,ent);
 	}
 	
 	public void removeEnt(String ent)
 	{
-		// go backwards to do this in one pass without messing up the indexing
-		for(int i = entList.size()-1; i >=0; i--)
+		ArrayList<Integer> entsWithName = nameIndex.get(ent);
+		
+		for(Integer i : entsWithName)
 		{
-			if(entList.get(i).getText().equals(ent))
-			{
-				entList.remove(i);	
-			}
+			entTable.remove(i);	
 		}
 		
 	}
