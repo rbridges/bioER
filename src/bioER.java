@@ -21,7 +21,7 @@ public class bioER {
 	public static void main(String argv[])
 	{
 		//demo2();
-		demo3();
+		demo4();
 	}
 	
 	
@@ -114,9 +114,11 @@ public class bioER {
 		annotator.remove(d, "rules/killList.txt");
 		annotator.metaData(d, "rules/keywords.txt");
 		
-		for(Entity e : d.getEntList())
-		{
-			System.out.println(d.eList.getByName(e.getText()) );
-		}
+//		for(Entity e : d.getEntList())
+//		{
+//			System.out.println(d.eList.getByName(e.getText()) );
+//		}
+		
+		d.consolodateAdjacents();
 	}
 }

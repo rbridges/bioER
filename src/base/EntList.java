@@ -13,8 +13,8 @@ public class EntList {
 	private int addEntIndex;
 	private ArrayList<Entity> entList;
 	private Hashtable<String, ArrayList<Integer> > nameIndex;
-	private Hashtable<String, ArrayList<Integer> > sectionIndex;
-	private Hashtable<Integer, ArrayList<Integer> > integerSectionIndex;
+	private Hashtable<Integer, ArrayList<Integer> > sectionIndex;
+	
 	
 	//setters intentionally omitted
 	public String getListName() {
@@ -44,9 +44,9 @@ public class EntList {
 		
 		entList = new ArrayList<Entity>();
 		nameIndex = new Hashtable<String, ArrayList<Integer> >();
-		sectionIndex = new Hashtable<String, ArrayList<Integer> >();
+		sectionIndex = new Hashtable<Integer, ArrayList<Integer> >();
 		
-		integerSectionIndex = new Hashtable<Integer, ArrayList<Integer> >();
+		
 	}
 	
 	public Entity getByIndex(int index)
@@ -67,20 +67,18 @@ public class EntList {
 	}
 	
 	
-	public ArrayList<Entity> getBySection(String section)
+	public ArrayList<Entity> getBySection(int section)
 	{
 		ArrayList<Entity> ret = new ArrayList<Entity>();
 		ArrayList<Integer> entsInSection = sectionIndex.get(section);
+		if(entsInSection == null) return null;
 		for(Integer i : entsInSection)
 		{
 			ret.add(entTable.get(i));
 		}
 		return ret;
 	}
-	public ArrayList<Entity> getBySection(SectionContainer section)
-	{
-		return getBySection(section.toString());
-	}
+	
 //	public ArrayList<Entity> getByUniqueSection(int sectionNumber)
 //	{
 //		
@@ -101,21 +99,21 @@ public class EntList {
 		else{ nameIndex.get(ent.getText()).add(addEntIndex); }
 		
 		
-		if(! sectionIndex.containsKey(ent.getLocation().toString()))
+		if(! sectionIndex.containsKey(ent.getSectionNumber()))
 		{
 			ArrayList<Integer> newList = new ArrayList<Integer>();
 			newList.add(addEntIndex);
-			sectionIndex.put(ent.getText(), newList);
+			sectionIndex.put(ent.getSectionNumber(), newList);
 		}
-		else{ sectionIndex.get(ent.getLocation().toString()).add(addEntIndex); }
+		else{ sectionIndex.get(ent.getSectionNumber()).add(addEntIndex); }
 		
-		if(! integerSectionIndex.containsKey(ent.getSectionNumber()))
-		{
-			ArrayList<Integer> newList = new ArrayList<Integer>();
-			newList.add(addEntIndex);
-			integerSectionIndex.put(ent.getSectionNumber(), newList);
-		}
-		else{ integerSectionIndex.get(ent.getSectionNumber()).add(addEntIndex); }
+//		if(! integerSectionIndex.containsKey(ent.getSectionNumber()))
+//		{
+//			ArrayList<Integer> newList = new ArrayList<Integer>();
+//			newList.add(addEntIndex);
+//			integerSectionIndex.put(ent.getSectionNumber(), newList);
+//		}
+//		else{ integerSectionIndex.get(ent.getSectionNumber()).add(addEntIndex); }
 		
 		
 		

@@ -183,4 +183,40 @@ public class AnnotatableDocument {
 		return metaData;
 	}
 	
+	public void consolodateAdjacents()
+	{
+		for(int i=0; i<sections.size(); i++)
+		{
+			SectionContainer sc = sections.get(i);
+//			System.out.println(sc.getText() +"\n contains");
+//			System.out.println( eList.getBySection(sc.getSectionNumber())+" and " + italicsList.getBySection(sc.getSectionNumber()) + "\n" );
+			
+			ArrayList<Entity> reg = eList.getBySection(sc.getSectionNumber());
+			ArrayList<Entity> it = italicsList.getBySection(sc.getSectionNumber());
+			
+			consolodate(reg);
+			consolodate(it);
+			
+			
+			
+		}
+	}
+	
+	private void consolodate(ArrayList<Entity> list)
+	{
+		if(list==null) return;
+		
+		int last = (int)list.get(0).getPosition();
+		ArrayList<Entity> consoldateThese = new ArrayList<Entity>();
+		for(Entity e : list)
+		{
+			if(e.getPosition() == last+1)
+			{
+				
+			}
+		}
+		
+		
+	}
+	
 }
