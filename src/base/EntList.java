@@ -2,6 +2,7 @@ package base;
 import java.util.ArrayList;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class EntList {
 	private Hashtable<String, ArrayList<Integer> > nameIndex;
 	private Hashtable<Integer, ArrayList<Integer> > sectionIndex;
 	
+	private HashSet<String> uniques;
 	
 	//setters intentionally omitted
 	public String getListName() {

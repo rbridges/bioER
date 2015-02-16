@@ -9,6 +9,8 @@ public class SectionContainer {
 	private ArrayList<String> path;
 	private String text;
 	private int sectionNumber;
+	
+	private int relevance;
 //	
 //	public Node getN() {
 //		return n;
@@ -43,16 +45,21 @@ public class SectionContainer {
 
 
 	
-	public SectionContainer(Node _n, ArrayList<String> _path, int _sectionNumber)
+	public SectionContainer(Node _n, ArrayList<String> _path, int _sectionNumber, int _relevance)
 	{
 		n = _n;
 		sectionNumber = _sectionNumber;
 		path = new ArrayList<String> (_path);
 		text = new String(n.getTextContent());
+		relevance = _relevance;
 	//	System.out.println(n.getNodeName() + " : " + text + " @ " + path);
 		 
 	}
 	
+	public int getRelevance()
+	{
+		return relevance;
+	}
 	
 	@Override
 	public String toString()

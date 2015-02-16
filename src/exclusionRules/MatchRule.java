@@ -1,23 +1,24 @@
 package exclusionRules;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Scanner;
 
 
 public class MatchRule extends ExclusionRule {
 
-	Hashtable<String, Integer> killList;
+	HashSet<String> killList;
 	
 	public MatchRule(String killListName)
 	{
-		killList  = new Hashtable<String, Integer>();
+		killList  = new HashSet<String>();
 		File killListFile = new File(killListName);
 		try {
 			Scanner scan = new Scanner(killListFile);
 			while(scan.hasNextLine())
 			{
-				killList.put(scan.nextLine(), 42); // facetious entry of 42. Just care about containsKey()
+				killList.add(scan.nextLine()); 
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -30,7 +31,7 @@ public class MatchRule extends ExclusionRule {
 	@Override
 	public boolean shouldExclude(String t) 
 	{
-		return killList.containsKey(t);
+		return killList.contains(t);
 	}
 
 	@Override
@@ -38,6 +39,13 @@ public class MatchRule extends ExclusionRule {
 	{
 		// TODO hmmm
 		return 1;
+	}
+
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

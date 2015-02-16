@@ -1,145 +1,57 @@
 package base;
-import inclusionRules.InclusionRule;
-import inclusionRules.RegexRule;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Hashtable;
-
-import com.rits.cloning.Cloner;
-
-import exclusionRules.ExclusionRule;
-
-
+import java.util.HashSet;
 
 public class EntManager {
-	ArrayList<InclusionRule> inclusionRules;
-	ArrayList<ExclusionRule> exclusionRules;
-	EntList entList;
 
-
-
-	public EntManager()
-	{
-		inclusionRules = new ArrayList<InclusionRule>();
-		entList = new EntList("default:EntManager");
-	}
-	public EntManager(Collection rules)
-	{
-		inclusionRules = new ArrayList<InclusionRule>();
-		entList = new EntList("default:EntManager");
-		
-		if(rules.size() == 0) return;	
-		Object r[] = rules.toArray();
-		
-		//ASSUMING we get a list of the same type of object, in this case, string
-		if( r[0] instanceof String )
-		{
-			for(Object s : r)
-			{
-				addRule( (String)s );
-			}
-		}
-		
-		// in this case, InclusionRule
-		if( r[0] instanceof InclusionRule )
-		{
-			for(Object ir : r)
-			{
-				addRule( (InclusionRule)ir );
-			}
-		}
-	}
-
+	private AliasManager aliasManager;
+	private EntList eList;
+	private HashSet<String> uniques;
 	
-	public void addRule(String regex)
+	EntManager(String name)
 	{
-		inclusionRules.add( new RegexRule( regex ) );
-	}
-	public void addRule(InclusionRule ir)
-	{
-		// https://code.google.com/p/cloning/wiki/Downloads?tm=2
-		Cloner cloner = new Cloner();
-		inclusionRules.add( cloner.deepClone(ir) );
+		eList = new EntList( name );
+		aliasManager = new AliasManager();
+		uniques = new HashSet<String>();
 	}
 	
- 
-	public void loadup(Hashtable<Integer, SectionContainer> sections)
+	public void aliasEnts(String master, String alias) 
 	{
-		iterateWordsMethod(sections);
+		aliasManager.pair(master,alias);
 	}
 	
-	
-	protected void iterateWordsMethod(Hashtable<Integer,SectionContainer> sections)
+	public EntList getEntList()
 	{
-		//for a given inclusionRule
-		for(InclusionRule ir : inclusionRules)
-		{
-			//iterate through all sections
-			for(int i = 0; i < sections.size(); i++)
-			{
-				
-				SectionContainer sc = sections.get(i);
-				String tokens[] = sc.getText().split(" ");
-
-				//and though all words in each section
-				for(int j = 0; j < tokens.length; j++)
-				{
-					String token = tokens[j].trim(); // trim to remove extra spaces from DFS text removal
-					if( ir.isEnt(token) )
-					{
-						addEnt(token, sc, j );
-					}
-					
-				}
-				
-				
-				
-				
-			}
-		}
+		return eList;
 	}
 	
-	protected void functorMethod(Hashtable<String,SectionContainer> sections)
+	public HashSet<String> getAliases(String name)
 	{
-		//for a given inclusionRule
-		for(InclusionRule ir : inclusionRules)
-		{
-			//iterate through all sections
-			for(int i = 0; i < sections.size(); i++)
-			{
-				
-				SectionContainer sc = sections.get(i);
-				String tokens[] = sc.getText().split(" ");
-
-				//and though all words in each section
-				for(int j = 0; j < tokens.length; j++)
-				{
-					String token = tokens[j].trim(); // trim to remove extra spaces from DFS text removal
-					if( ir.isEnt(token) )
-					{
-						addEnt(token, sc, j );
-					}
-					
-				}
-
-				
-			}
-		}
+		return aliasManager.getAliases(name);
 	}
-	
-	private void addEnt(String token, SectionContainer sc, int position)
-	{
-		entList.addEnt( new Entity(token, sc, position) ); // didn't see the point in adding another level of indirection with just "addEnt()"
-	}
-	
 	
 	public void addEnt(Entity ent)
 	{
-		entList.addEnt(ent);
+		String entName = ent.getText();
+		// so that the uniques table only has the main name
+		HashSet<String> aliases = aliasManager.getAliases(entName);
+		for(String alias : aliases )
+		{
+			uniques.remove(alias);
+		}
+		uniques.add( aliasManager.getMainName(entName) );
+		
+		eList.addEnt(ent);
 	}
 	
-	public EntList getEntList() {
-		return entList;
+	public HashSet<String> getUniques()
+	{
+		return uniques;
+	}
+	
+	public String getMainName(String name)
+	{
+		return aliasManager.getMainName(name);
 	}
 }

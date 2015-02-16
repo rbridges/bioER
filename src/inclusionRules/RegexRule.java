@@ -26,4 +26,9 @@ public class RegexRule extends InclusionRule {
 		
 	}
 
+	@Override
+	public String getType() {
+		return type;
+	}
+
 }

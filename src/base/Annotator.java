@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import exclusionRules.MatchRule;
 
@@ -25,13 +26,13 @@ public class Annotator {
 		metaRules = new Hashtable< String,Rule >();
 	}
 
+
 	public void annotate(AnnotatableDocument aDoc, String fileName)
 	{
 		if(!rules.containsKey(fileName) )
 		{
 			addRules(fileName);
 		}
-		
 		rollThrough_booleanRule(aDoc, fileName);
 	}
 	
@@ -78,7 +79,7 @@ public class Annotator {
 	}
 
 	// currently only adds regex rules
-	private void addRules(String fileName) 
+	public void addRules(String fileName) 
 	{
 		File f = new File(fileName);
 		Scanner scan = null;
@@ -139,14 +140,14 @@ public class Annotator {
 				{
 					if( ((InclusionRule) r).isEnt(t[i]))
 					{
-						ad.addEntity( new Entity(t[i], sc, i) ,"regular");
+						ad.addEntity( new Entity(t[i], sc, i, i) ,"regex");
 					}
 					
 					//HARDCODED ITALICS GRABBER
 					ArrayList<String> a = sc.getPath();
 					if(a.get( a.size()-1 ).equals("it") )
 					{
-						ad.addEntity( new Entity(t[i], sc, i) ,"italics");
+						ad.addEntity( new Entity(t[i], sc, i, i) ,"italics");
 					}
 					////
 					
@@ -184,6 +185,92 @@ public class Annotator {
 					}
 				}	
 			}
+		
+		
+	}
+	
+	
+	
+	
+	////////// procedural annotation
+	
+	// going to try and just write this out, design an interface later
+	public void annotate(AnnotatableDocument doc)
+	{
+		addRules("rules/regexPatterns.txt");
+		addRemovalRules("rules/killList.txt");
+		
+		ArrayList<Rule> regexMatcher = rules.get("rules/regexPatterns.txt");
+		MatchRule removeSet = (MatchRule)removalRules.get("rules/killList.txt");
+		
+		Hashtable<Integer,SectionContainer> sections = doc.getSections();
+		
+		for(SectionContainer sc : sections.values())
+		{
+			if(sc.getRelevance()==0) continue;
+			
+			///////// italics //and bold
+			ArrayList<String> path = sc.getPath();
+			String last = path.get(path.size()-1);
+			if( last.equals("italics") || last.equals("it") )
+			{
+				// the entity is the full range of stuff inside the italics
+				Entity newEnt = new Entity(sc.getText(), sc, 0, (sc.getText().length()-1) );
+				newEnt.addFoundBy("italics");
+				doc.addEntity(newEnt, "italics");
+				// can simply verify if entity is a regex match, don't need to do it at parse time
+				// TODO: also no parenthesis inside italics (but <it>entity</it> <it>(alias)</it> happens)
+				continue;
+			}
+//			if( last.equals("bold") || last.equals("b") )
+//			{
+//				// the entity is the full range of stuff inside the bold
+//				Entity newEnt = new Entity(sc.getText(), sc, 0, (sc.getText().length()-1) );
+//				newEnt.addFoundBy("bold");
+//				doc.addEntity(newEnt, "bold");
+//			}
+			/////////// end italics and bold
+			
+			
+			String t[] = sc.getText().split(" ");
+			for(int i = 0; i < t.length; i++ )
+			{
+				if( removeSet.shouldExclude(t[i])) continue;
+				Entity newEnt = null;
+				
+				boolean isRegexMatch = false;
+				
+				// regex match
+				for(Rule r : regexMatcher)
+				{
+					if( ((RegexRule)r).isEnt(t[i]))
+						{
+							isRegexMatch = true;
+							if(newEnt==null) newEnt = new Entity(t[i], sc, i, i);
+							newEnt.addFoundBy("regex");
+							break;
+						}
+				}
+				if(i == (t.length-1) ) break;
+				String inParenths = "\\([^) ]+?\\)"; // no spaces, one token in ()
+				if(isRegexMatch && Pattern.matches(inParenths,t[i+1]) )
+				{
+					String noParenths = t[i+1].replace("(", "").replace(")","");
+					doc.getEntManager().aliasEnts(t[i], noParenths);
+				}
+				
+				
+				if(newEnt!=null) doc.addEntity(newEnt, "regex");
+				
+					
+				
+			}
+			
+		}
+		
+		
+		
+		
 		
 		
 	}

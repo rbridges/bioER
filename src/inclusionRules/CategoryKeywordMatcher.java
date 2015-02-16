@@ -87,5 +87,10 @@ public class CategoryKeywordMatcher extends InclusionRule {
 		
 	}
 	
+	public String getType()
+	{
+		return type;
+	}
+	
 
 }

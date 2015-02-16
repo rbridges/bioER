@@ -6,22 +6,32 @@ import java.util.ArrayList;
 public class Entity {
 	private String text;
 	private SectionContainer location;
-	private int position;
+	private int startPosition;
+	private int endPosition;
 	private double probability;
 	private Long id; //not sure if this is necessary. EntList will associate an id
 	
-	Entity()
-	{
-		text = null;
-		location = null;
-		position = -1;
-	}
+	private ArrayList<String> foundByList;
 	
-	Entity(String _text, SectionContainer _location, int _position)
+//	Entity()
+//	{
+//		text = null;
+//		location = null;
+//		position = -1;
+//	}
+	
+	Entity(String _text, SectionContainer _location, int start, int end)
 	{
 		text = _text;
 		location = _location;
-		position = _position;
+		startPosition = start;
+		endPosition = end;
+		
+		foundByList = new ArrayList<String>();
+	}
+	public void addFoundBy(String ruleName)
+	{
+		foundByList.add(ruleName);
 	}
 
 	public String getText() {
@@ -41,16 +51,16 @@ public class Entity {
 	}
 
 	public double getPosition() {
-		return position;
+		return startPosition;
 	}
 
 	public void setPosition(int position) {
-		this.position = position;
+		this.startPosition = position;
 	}
 	
 	public String toString()
 	{
-		return text + "\n" + location.toString() + " @" + position;
+		return text + "\n" + location.toString() + " @" + startPosition;
 	}
 
 	public int getSectionNumber()
@@ -58,4 +68,8 @@ public class Entity {
 		return location.getSectionNumber();
 	}
 	
+	public ArrayList<String> getFoundByList()
+	{
+		return foundByList;
+	}
 }

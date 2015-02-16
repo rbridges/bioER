@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -11,11 +12,14 @@ public class AnnotatableDocument {
 	private Document doc;
 	private Hashtable<Integer, SectionContainer> sections;
 	private int special_number; //serves as a unique counter for sectionContainers added to sections
-	
-	public EntList eList;
+	private Hashtable<String, ArrayList<Integer> > informalSectionIndex = informalSectionIndex = new Hashtable<String, ArrayList<Integer> >();
+	private ArrayList<String> informalSections = new ArrayList<String>();
+	private EntManager eManager;
 	private Hashtable<String,Integer> metaData;
 	
 	private EntList italicsList;
+	
+	
 	
 	AnnotatableDocument(Node d, String type)
 	{
@@ -23,20 +27,22 @@ public class AnnotatableDocument {
 		getSections(d);
 		doc = (Document) d;
 		
-		eList = new EntList( d.getLocalName() );
+		eManager = new EntManager( d.getLocalName() );
 		metaData = new Hashtable<String, Integer>();
-		
 		italicsList = new EntList( "italics" );
+		
+		
+		
 	}
 	
 	private void getSections(Node d)
 	{
 		ArrayList<String> path = new ArrayList<String>();
 		path.add(d.getNodeName());
-		loadup(d, path);
+		loadup(d, path, "UNASSIGNED");
 		special_number = 0;
 	}
-	private void loadup(Node node, ArrayList<String> path)
+	private void loadup(Node node, ArrayList<String> path, String informalSectionName)
 	{
 		NodeList nodeList = node.getChildNodes();
 		for (int count = 0; count < nodeList.getLength(); count++) {
@@ -69,16 +75,34 @@ public class AnnotatableDocument {
 //					else{ path.set(path.size()-1, currentPathTopNode+(lastNumber+1));}
 //				}
 //				///
+		
 				
-				loadup(tempNode, path );
+					
+				informalSectionName = getInformalSectionName(tempNode,path,informalSectionName);
+					
+				loadup(tempNode, path, informalSectionName);
 			
 				// associate the section number with a SectionContainer with copy of node and the path.
 				// deep copied the node to separate the text and attribute data I want from ""s left to remedy double counting entities
 				if(!tempNode.getTextContent().equals(""))
 				{
-					getSections().put(special_number, new SectionContainer(tempNode.cloneNode(true), path, special_number));
+					int relevance = getSectionRelevance(path);
+					sections.put(special_number, new SectionContainer(
+							tempNode.cloneNode(true), path, special_number, relevance));
+					
+					if(informalSections.isEmpty())
+					{
+						informalSections.add(informalSectionName);
+					}
+					if(!informalSections.get(informalSections.size()-1).equals(informalSectionName))
+					{
+						informalSections.add(informalSectionName);
+					}
+					
+					markInformalSection(informalSectionName);
 					special_number++;
 				}
+				
 				// clear out the text at the bottom of the recrusion tree as to not double count as we ascend back up
 				tempNode.setTextContent("");
 			
@@ -116,7 +140,46 @@ public class AnnotatableDocument {
 		}
 		return false;
 	}
-	
+	private int getSectionRelevance(ArrayList<String> path)
+	{
+		if(path.contains("abstract")) return 5; // 5 most important
+		if(path.contains("back")) return 0; // 0 means no entity importance
+		return 3;
+	}
+	private String getInformalSectionName(Node tempNode, ArrayList<String> path, String currentName)
+	{
+		if(path.contains("abstract")) return "abstract";
+		
+		
+		String nodeName = tempNode.getNodeName();
+		if(nodeName.equalsIgnoreCase("sec")
+				|| nodeName.equalsIgnoreCase("section"))
+		{
+			NamedNodeMap attributes = tempNode.getAttributes();
+
+			Node sectionType = attributes.getNamedItem("sec-type");
+			if(sectionType!=null)
+			{
+				return sectionType.getNodeValue();
+			}
+		}
+		
+		if(path.contains("sec") || path.contains("section") )
+		{
+			return currentName;
+		}
+		
+		return "UNASSIGNED";
+	}
+	//baaaad code. TODO: just make a "LookupList" data structure
+	private void markInformalSection(String informalSectionName)
+	{
+		if(!informalSectionIndex.containsKey(informalSectionName))
+		{
+			informalSectionIndex.put(informalSectionName, new ArrayList<Integer>());
+		}
+		informalSectionIndex.get(informalSectionName).add(special_number);
+	}
 	public Hashtable<Integer, SectionContainer> getSections() 
 	{
 		return sections;
@@ -132,7 +195,7 @@ public class AnnotatableDocument {
 	//TODO: deprecate these ArrayList getters
 	public ArrayList<Entity> getEntList()
 	{
-		return eList.getEntList();
+		return eManager.getEntList().getEntList();
 	}
 	//TODO: deprecate these ArrayList getters
 	public ArrayList<Entity> getItalicsList()
@@ -150,22 +213,23 @@ public class AnnotatableDocument {
 		{
 			return italicsList.getEntList();
 		}
-		return eList.getEntList();
+		return eManager.getEntList().getEntList();
 	}
 	
 	public void addEntity(Entity ent, String whichList)
 	{
-		if(whichList.equals("italics"))
-		{
-			italicsList.addEnt(ent);
-			return;
-		}
-		eList.addEnt(ent);
+//		if(whichList.equals("italics"))
+//		{
+//			italicsList.addEnt(ent);
+//			return;
+//		}
+		
+		eManager.addEnt(ent);
 	}
 	
 	public void removeEntity(String ent)
 	{
-		eList.removeEnt(ent);
+		eManager.getEntList().removeEnt(ent);
 	}
 	public void addMetaData(String category)
 	{
@@ -183,6 +247,8 @@ public class AnnotatableDocument {
 		return metaData;
 	}
 	
+	
+	//TODO: hmmmm?
 	public void consolodateAdjacents()
 	{
 		for(int i=0; i<sections.size(); i++)
@@ -191,32 +257,47 @@ public class AnnotatableDocument {
 //			System.out.println(sc.getText() +"\n contains");
 //			System.out.println( eList.getBySection(sc.getSectionNumber())+" and " + italicsList.getBySection(sc.getSectionNumber()) + "\n" );
 			
-			ArrayList<Entity> reg = eList.getBySection(sc.getSectionNumber());
+			ArrayList<Entity> reg = eManager.getEntList().getBySection(sc.getSectionNumber());
 			ArrayList<Entity> it = italicsList.getBySection(sc.getSectionNumber());
 			
-			consolodate(reg);
-			consolodate(it);
+//			consolodate(reg);
+//			consolodate(it);
 			
 			
 			
 		}
+	}
+
+	public EntManager getEntManager() {
+		return eManager;
 	}
 	
-	private void consolodate(ArrayList<Entity> list)
+	public ArrayList<String> getInformalSectionLookup()
 	{
-		if(list==null) return;
-		
-		int last = (int)list.get(0).getPosition();
-		ArrayList<Entity> consoldateThese = new ArrayList<Entity>();
-		for(Entity e : list)
-		{
-			if(e.getPosition() == last+1)
-			{
-				
-			}
-		}
-		
-		
+		return informalSections;
 	}
+	public ArrayList<Integer> getSectionsByInformalName(String informalName)
+	{
+		return informalSectionIndex.get(informalName);
+	}
+	
+//	private void consolodate(ArrayList<Entity> list)
+//	{
+//		if(list==null) return;
+//		
+//		int last = (int)list.get(0).getPosition();
+//		ArrayList<Entity> consoldateThese = new ArrayList<Entity>();
+//		for(Entity e : list)
+//		{
+//			if(e.getPosition() == last+1)
+//			{
+//				
+//			}
+//		}
+//		
+//		
+//	}
+
+	
 	
 }
