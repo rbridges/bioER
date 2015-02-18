@@ -39,4 +39,11 @@ public class matchRule extends ExclusionRule {
 		return 1;
 	}
 
+
+	@Override
+	public String getType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -2,6 +2,8 @@ import inclusionRules.CategoryKeywordMatcher;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -27,9 +29,13 @@ public class bioER {
 	{
 		// inputFiles/xml/PC_108688_fin.xml
 		
-		long start = demo5();
-		long end = System.currentTimeMillis();
-		System.out.println("\nDemo runs in "+ ((end-start)/1000 + "." + ((end-start)%1000)) + " seconds");
+		try {
+			demo5();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 	}
 	
 	
@@ -130,29 +136,30 @@ public class bioER {
 		d.consolodateAdjacents();
 	}
 	
-	public static long demo5()
+	public static long demo5() throws IOException
 	{// inputFiles/xml/PC_108688_fin.xml
+		
+		
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Give an xml or gml filename: ");
 		String fileName = scan.next();
+		
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(fileName+"_OUT");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		long startTime = System.currentTimeMillis();
 		DocumentParser p = new DocumentParser();
 		Annotator annotator = new Annotator();
-		
-		Visualizer v = new Visualizer();
-		
-		
-		long beforeDoc = System.currentTimeMillis();
+
 		AnnotatableDocument d = p.getAnnotatableDoc(fileName);
-		long afterDoc = System.currentTimeMillis();
-		System.out.println("\nDoc parsing takes "+ ((afterDoc-beforeDoc)/1000 + "." + ((afterDoc-beforeDoc)%1000)) + " seconds");
-		
-		long beforeAnnotation = System.currentTimeMillis();
+	
 		annotator.annotate(d);
-		long afterAnnotation = System.currentTimeMillis();
-		System.out.println("\nDoc annotation takes "+ ((afterAnnotation-beforeAnnotation)/1000 + "." + ((afterAnnotation-beforeAnnotation)%1000)) + " seconds");
-		
-		EntManager em = d.getEntManager();
+	
 	
 //		for(Entity e : em.getEntList().getEntList())
 //		{
@@ -166,7 +173,9 @@ public class bioER {
 		for(String section : informalSections)
 		{
 			NameSet<Entity> nameSet = new NameSet<Entity>();
-			System.out.println("In " + section + ": \n");
+			//System.out.println("In " + section + ": \n");
+			fw.write("In " + section + ": \n");
+			
 			for(int sectionNumber : d.getSectionsByInformalName(section))
 			{
 				EntList eList = manager.getEntList();
@@ -180,12 +189,17 @@ public class bioER {
 			}
 			for(String name : nameSet.getItems())
 			{
-				System.out.println("\t"+name+"("+nameSet.getFrequency(name)+
-						") w/ aliases " + manager.getAliases(name));
+				//System.out.println("\t"+name+"("+nameSet.getFrequency(name)+
+						//") w/ aliases " + manager.getAliases(name));
+				fw.write("\t"+name+"("+nameSet.getFrequency(name)+
+						") w/ aliases " + manager.getAliases(name)+"\n");
+				
 			}
-			System.out.println("\n\n");
+			//System.out.println("\n\n");
+			fw.write("\n\n");
 		}
 		
+		fw.close();
 		return startTime;
 	}
 
