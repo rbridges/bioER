@@ -2,6 +2,8 @@ package base;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -17,6 +19,8 @@ public class AnnotatableDocument {
 	private EntManager eManager;
 	private Hashtable<String,Integer> metaData;
 	
+	private String textSnapShot;
+	
 	private EntList italicsList;
 	
 	
@@ -24,8 +28,10 @@ public class AnnotatableDocument {
 	AnnotatableDocument(Node d, String type)
 	{
 		sections = new Hashtable<Integer, SectionContainer>();
-		getSections(d);
 		doc = (Document) d;
+		String uncleanedText = doc.getElementsByTagName("article").item(0).getTextContent();
+		textSnapShot = clean(uncleanedText);
+		getSections(d);
 		
 		eManager = new EntManager( d.getLocalName() );
 		metaData = new Hashtable<String, Integer>();
@@ -35,10 +41,28 @@ public class AnnotatableDocument {
 		
 	}
 	
+	private String clean(String unCleaned)
+	{
+		
+		StringBuilder sb = new StringBuilder();
+		for(String t : unCleaned.split(" "))
+		{
+			if(! (t.equals(" ") || t.equals("")) )
+			{
+				sb.append(t.trim());
+				sb.append(" ");
+			}
+		}
+			
+		return sb.toString();
+	}
+	
 	private void getSections(Node d)
 	{
 		ArrayList<String> path = new ArrayList<String>();
 		path.add(d.getNodeName());
+
+		
 		loadup(d, path, "UNASSIGNED");
 		special_number = 0;
 	}
@@ -53,6 +77,7 @@ public class AnnotatableDocument {
 			
 			if (tempNode.hasChildNodes())
 			{
+				
 				path.add(tempNode.getNodeName());
 				
 //				/// repeated path remedy?
@@ -214,6 +239,11 @@ public class AnnotatableDocument {
 			return italicsList.getEntList();
 		}
 		return eManager.getEntList().getEntList();
+	}
+	
+	public String getFullText()
+	{
+		return textSnapShot;
 	}
 	
 	public void addEntity(Entity ent, String whichList)

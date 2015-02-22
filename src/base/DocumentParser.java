@@ -59,47 +59,49 @@ public class DocumentParser {
 			
 		return new AnnotatableDocument(d,"smgl?");
 	}
-	
-	private InputStream fakeInputStream(String fileName)
-	{
-		ArrayList<String> fileStuff = null;
-		StringBuilder sb = new StringBuilder();
-		String type = null;
-		
-		try {
-			fileStuff = (ArrayList<String>)Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		
-		for(String line : fileStuff)
-		{
-			if(line.contains("doctype"))
-			{
-				type = "sgml";
-				line = line.replace("doctype", "DOCTYPE").
-						replace("public","PUBLIC").
-						replace("[]"," \"dtds/journalpublishing.dtd\"");
-			}
-			else if(line.contains("DOCTYPE"))
-			{
-				type = "xml";
-				if(!line.contains("dtds/journalpublishing.dtd"))
-				{
-					line = line.replace("journalpublishing.dtd","dtds/journalpublishing.dtd");
-				}
-			}
-				
-			
-			sb.append(line);
-		}
-	
-		
-		return new ByteArrayInputStream(sb.toString().getBytes());
-		
-		
-	}
+//	
+//	private InputStream fakeInputStream(String fileName)
+//	{
+//		ArrayList<String> fileStuff = null;
+//		StringBuilder sb = new StringBuilder();
+//		String type = null;
+//		
+//		try {
+//			fileStuff = (ArrayList<String>)Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		for(String line : fileStuff)
+//		{
+//			if(line.contains("doctype"))
+//			{
+//				type = "sgml";
+//				line = line.replace("doctype", "DOCTYPE").
+//						replace("public","PUBLIC").
+//						replace("[]"," \"dtds/journalpublishing.dtd\"");
+//			}
+//			else if(line.contains("DOCTYPE"))
+//			{
+//				type = "xml";
+//				if(!line.contains("dtds/journalpublishing.dtd"))
+//				{
+//					line = line.replace("journalpublishing.dtd","dtds/journalpublishing.dtd");
+//				}
+//			}
+//			
+//		
+//				
+//			
+//			sb.append(line);
+//		}
+//	
+//		
+//		return new ByteArrayInputStream(sb.toString().getBytes());
+//		
+//		
+//	}
 	//TODO: sustainable conversion
 	private InputStream cleanInputStream(String fileName)
 	{
@@ -114,7 +116,7 @@ public class DocumentParser {
 		}
 		
 		Pattern p_link = Pattern.compile("<link[^>]*");
-		System.out.println(fileStuff.size());
+		
 		for(String line : fileStuff)
 		{
 	
@@ -136,6 +138,8 @@ public class DocumentParser {
 				
 			line = p_link.matcher(line).replaceAll(" ");
 			line = line.replace("<br>", " ");
+			// to help make "text snapshot" more readable/tokenizable
+			line = line.replace("<"," <");
 			sb.append(line);
 			
 		}

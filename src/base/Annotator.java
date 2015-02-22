@@ -11,6 +11,9 @@ import java.util.Hashtable;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
 import exclusionRules.MatchRule;
 
 public class Annotator {
@@ -197,11 +200,63 @@ public class Annotator {
 	// going to try and just write this out, design an interface later
 	public void annotate(AnnotatableDocument doc)
 	{
+		
 		addRules("rules/regexPatterns.txt");
 		addRemovalRules("rules/killList.txt");
 		
 		ArrayList<Rule> regexMatcher = rules.get("rules/regexPatterns.txt");
 		MatchRule removeSet = (MatchRule)removalRules.get("rules/killList.txt");
+		
+		// lazy me adding a scope as to not redeclare variables of same name below
+	{	
+		
+		//// New section to add () aliasing
+	
+		String text = doc.getFullText();
+		String t[] = doc.getFullText()./*replace("  ", " ").*/split(" ",-1); //replace("<italics>", "").replace("</italics>", "").
+		boolean isRegexMatch = false;
+		String inParenths = "\\([^) ]+?\\)"; // no spaces, one token in ()
+		
+		for(int i = 0; i < t.length; i++  )
+		{
+			if(i == (t.length-1) ) break;
+//			if(t[i].equals("VERDANDI"))
+//			{
+//				System.out.printf("%s|%s|%s|%s|%s|%s\n",t[i-2],t[i-1],t[i],t[i+1],t[i+2],t[i+3]);
+//				
+//			}
+			
+			for(Rule r : regexMatcher)
+			{
+				if( ((RegexRule)r).isEnt(t[i]))
+					{
+						isRegexMatch = true; 
+						break;
+					}
+			}
+			
+			if(i == t.length-1) break;
+			if(isRegexMatch && !t[i].contains(".") && Pattern.matches(inParenths,t[i+1]) )
+			{
+				String noParenths = t[i+1].replace("(", "").replace(")","");
+				doc.getEntManager().aliasEnts(t[i], noParenths);
+			}
+			
+			if(i == t.length-3) continue;
+			//last parenth "contains" because of periods, etc.
+			if(isRegexMatch && !t[i].contains(".") && t[i+1].equals("(") && t[i+3].contains(")") )
+			{
+				String one = t[i];
+				String two = t[i+2];
+				doc.getEntManager().aliasEnts(t[i], t[i+2]);
+			}
+			
+			isRegexMatch = false;
+		}
+	}
+		
+		
+	
 		
 		Hashtable<Integer,SectionContainer> sections = doc.getSections();
 		
@@ -251,13 +306,8 @@ public class Annotator {
 							break;
 						}
 				}
-				if(i == (t.length-1) ) break;
-				String inParenths = "\\([^) ]+?\\)"; // no spaces, one token in ()
-				if(isRegexMatch && Pattern.matches(inParenths,t[i+1]) )
-				{
-					String noParenths = t[i+1].replace("(", "").replace(")","");
-					doc.getEntManager().aliasEnts(t[i], noParenths);
-				}
+		
+				// parenthesis aliasing was here
 				
 				
 				if(newEnt!=null) doc.addEntity(newEnt, "regex");
@@ -270,8 +320,7 @@ public class Annotator {
 		
 		
 		
-		
-		
+
 		
 	}
 	
