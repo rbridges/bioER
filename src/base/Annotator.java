@@ -220,11 +220,7 @@ public class Annotator {
 		for(int i = 0; i < t.length; i++  )
 		{
 			if(i == (t.length-1) ) break;
-//			if(t[i].equals("VERDANDI"))
-//			{
-//				System.out.printf("%s|%s|%s|%s|%s|%s\n",t[i-2],t[i-1],t[i],t[i+1],t[i+2],t[i+3]);
-//				
-//			}
+
 			
 			for(Rule r : regexMatcher)
 			{
