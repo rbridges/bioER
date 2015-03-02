@@ -1,17 +1,20 @@
 package base;
 import java.util.ArrayList;
 
-//TODO: how to deal with alias network? Probably don't
-// want it inside Entity class, but want it accessible from
+import l.EntAnnotation;
+
+
 public class Entity {
 	private String text;
 	private SectionContainer location;
 	private int startPosition;
 	private int endPosition;
 	private double probability;
-	private Long id; //not sure if this is necessary. EntList will associate an id
+	private int id; //not sure if this is necessary. EntList will associate an id
 	
 	private ArrayList<String> foundByList;
+	
+	private EntAnnotation eAnnotation;
 	
 //	Entity()
 //	{
@@ -28,13 +31,16 @@ public class Entity {
 		endPosition = end;
 		
 		foundByList = new ArrayList<String>();
+		
+		eAnnotation = new EntAnnotation();
 	}
 	public void addFoundBy(String ruleName)
 	{
 		foundByList.add(ruleName);
 	}
 
-	public String getText() {
+	public String getText() 
+	{
 		return text;
 	}
 
@@ -50,11 +56,13 @@ public class Entity {
 		this.location.setPath(location);
 	}
 
-	public double getPosition() {
+	public double getPosition() 
+	{
 		return startPosition;
 	}
 
-	public void setPosition(int position) {
+	public void setPosition(int position) 
+	{
 		this.startPosition = position;
 	}
 	
@@ -71,5 +79,19 @@ public class Entity {
 	public ArrayList<String> getFoundByList()
 	{
 		return foundByList;
+	}
+	
+	public void setStatus(EntAnnotation.Status s)
+	{
+		eAnnotation.mark(s);
+	}
+	
+	public void setId(int _id)
+	{
+		id=_id;
+	}
+	public int getId()
+	{
+		return id;
 	}
 }

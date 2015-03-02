@@ -24,7 +24,10 @@ public class AnnotatableDocument {
 	private EntList italicsList;
 	
 	
-	
+	/** Returns a AnnotateableDocument containing the plain text (space normed) and labeled sections.
+	 * No Annotations. 
+	 * @param d The javax document from which the AD is built
+	 * @param type The informal name for this AD (for intuitive differentiation)*/
 	AnnotatableDocument(Node d, String type)
 	{
 		sections = new Hashtable<Integer, SectionContainer>();
@@ -41,6 +44,7 @@ public class AnnotatableDocument {
 		
 	}
 	
+	// remove spaces and empty strings from the text
 	private String clean(String unCleaned)
 	{
 		

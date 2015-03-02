@@ -38,7 +38,7 @@ public class EntList {
 
 	//currently (1.19.15) the only thing calling this is EntManager
 	//with name "default:EntManager"
-	EntList(String name)
+	public EntList(String name)
 	{
 		whichList = name;
 		entTable = new Hashtable<Integer,Entity>();
@@ -88,7 +88,8 @@ public class EntList {
 	
 	public void addEnt(Entity ent)
 	{
-		
+		// let it carry it's own id, so that others (like EAManager) can ask for it to identify the ent while indexing.
+		ent.setId(addEntIndex);
 		
 		// if this is the first entity with that name, put a new list with that entity
 		if(! nameIndex.containsKey(ent.getText()))

@@ -3,11 +3,15 @@ package base;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import l.EAManager;
+import l.EntAnnotation;
+
 public class EntManager {
 
 	private AliasManager aliasManager;
 	private EntList eList;
 	private HashSet<String> uniques;
+	private EAManager entAnnManager;
 	
 	EntManager(String name)
 	{
@@ -20,6 +24,8 @@ public class EntManager {
 	{
 		aliasManager.pair(master,alias);
 	}
+	
+	
 	
 	public EntList getEntList()
 	{
@@ -53,5 +59,16 @@ public class EntManager {
 	public String getMainName(String name)
 	{
 		return aliasManager.getMainName(name);
+	}
+	
+	//label an ent as TP or FP
+	public void annotateExisting(Entity ent, EntAnnotation.Status s)
+	{
+		entAnnManager.markExisting(ent, s);
+	}
+	// label ent as FN
+	public void annotateMissed(Entity ent)
+	{
+		entAnnManager.markMissed(ent);
 	}
 }
