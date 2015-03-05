@@ -29,7 +29,7 @@ public class Annotator {
 		metaRules = new Hashtable< String,Rule >();
 	}
 
-
+	//USED IN OLD DEMOS
 	public void annotate(AnnotatableDocument aDoc, String fileName)
 	{
 		if(!rules.containsKey(fileName) )
@@ -129,6 +129,7 @@ public class Annotator {
 		
 	}
 	
+	//NOT USED IN CURRENT CODE
 	private void rollThrough_booleanRule(AnnotatableDocument ad, String ruleKey)
 	{
 		Hashtable<Integer, SectionContainer> sections = ad.getSections();
@@ -141,16 +142,17 @@ public class Annotator {
 				String t[] = sc.getText().split(" ");
 				for(int i = 0; i < t.length; i++ )
 				{
-					if( ((InclusionRule) r).isEnt(t[i]))
+					String cleaned = t[i].replace(",", "").replace(".", "");
+					if( ((InclusionRule) r).isEnt(cleaned))
 					{
-						ad.addEntity( new Entity(t[i], sc, i, i) ,"regex");
+						ad.addEntity( new Entity(cleaned, sc, i, i) ,"regex");
 					}
 					
 					//HARDCODED ITALICS GRABBER
 					ArrayList<String> a = sc.getPath();
 					if(a.get( a.size()-1 ).equals("it") )
 					{
-						ad.addEntity( new Entity(t[i], sc, i, i) ,"italics");
+						ad.addEntity( new Entity(cleaned, sc, i, i) ,"italics");
 					}
 					////
 					
@@ -221,10 +223,10 @@ public class Annotator {
 		{
 			if(i == (t.length-1) ) break;
 
-			
+			String cleaned = t[i].replace(",", "").replace(".", "");
 			for(Rule r : regexMatcher)
 			{
-				if( ((RegexRule)r).isEnt(t[i]))
+				if( ((RegexRule)r).isEnt(cleaned))
 					{
 						isRegexMatch = true; 
 						break;
@@ -235,7 +237,7 @@ public class Annotator {
 			if(isRegexMatch && !t[i].contains(".") && Pattern.matches(inParenths,t[i+1]) )
 			{
 				String noParenths = t[i+1].replace("(", "").replace(")","");
-				doc.getEntManager().aliasEnts(t[i], noParenths);
+				doc.getEntManager().aliasEnts(cleaned, noParenths);
 			}
 			
 			if(i == t.length-3) continue;
@@ -244,7 +246,7 @@ public class Annotator {
 			{
 				String one = t[i];
 				String two = t[i+2];
-				doc.getEntManager().aliasEnts(t[i], t[i+2]);
+				doc.getEntManager().aliasEnts(cleaned, t[i+2].replace(",", "").replace(".", ""));
 			}
 			
 			isRegexMatch = false;
@@ -286,7 +288,8 @@ public class Annotator {
 			String t[] = sc.getText().split(" ");
 			for(int i = 0; i < t.length; i++ )
 			{
-				if( removeSet.shouldExclude(t[i])) continue;
+				String cleaned = t[i].replace(".", "").replace(",", "");
+				if( removeSet.shouldExclude(cleaned)) continue;
 				Entity newEnt = null;
 				
 				boolean isRegexMatch = false;
@@ -294,10 +297,10 @@ public class Annotator {
 				// regex match
 				for(Rule r : regexMatcher)
 				{
-					if( ((RegexRule)r).isEnt(t[i]))
+					if( ((RegexRule)r).isEnt(cleaned))
 						{
 							isRegexMatch = true;
-							if(newEnt==null) newEnt = new Entity(t[i], sc, i, i);
+							if(newEnt==null) newEnt = new Entity(cleaned, sc, i, i);
 							newEnt.addFoundBy("regex");
 							break;
 						}

@@ -29,11 +29,7 @@ public class bioER {
 	{
 		// inputFiles/xml/PC_108688_fin.xml
 		
-		try {
-			demo5();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		compactTableDemo();
 		
 		
 	}
@@ -201,6 +197,26 @@ public class bioER {
 		
 		fw.close();
 		return startTime;
+	}
+	
+	
+	public static void compactTableDemo()
+	{
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Give an xml or gml filename: ");
+		String fileName = scan.next();
+		
+		DocumentParser p = new DocumentParser();
+		Annotator annotator = new Annotator();
+		AnnotatableDocument d = p.getAnnotatableDoc(fileName);
+		annotator.annotate(d);
+		
+		try {
+			(new Visualizer()).makeCompactTable(d, fileName+"_OUT");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
