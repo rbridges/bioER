@@ -212,7 +212,7 @@ public class bioER {
 		annotator.annotate(d);
 		
 		try {
-			(new Visualizer()).makeCompactTable(d, fileName+"_OUT");
+			(new Visualizer()).makeCompactTable(d, fileName+"_OUT.html");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
