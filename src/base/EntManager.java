@@ -3,8 +3,8 @@ package base;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import l.EAManager;
-import l.EntAnnotation;
+import annotation.EAManager;
+import annotation.EntAnnotation;
 
 public class EntManager {
 

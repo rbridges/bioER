@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 import org.w3c.dom.Document;
 
+import database.DBManager;
 import utils.NameSet;
 import utils.NumberedSet;
 import base.AnnotatableDocument;
@@ -29,7 +30,7 @@ public class bioER {
 	{
 		// inputFiles/xml/PC_108688_fin.xml
 		
-		compactTableDemo();
+		dataBaseDemo();
 		
 		
 	}
@@ -217,6 +218,19 @@ public class bioER {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void dataBaseDemo()
+	{
+		DBManager dbm = new DBManager();
+		dbm.startDB("storage");
+		dbm.createTable("entities");
+		
+		//dbm.insert("entities", "(3,'fake3')");
+		//dbm.insert("entities", "(2,'fake2')");
+		System.out.println( dbm.seeTable("entities") );
+		
+		dbm.shutDown();
 	}
 
 }

@@ -1,7 +1,7 @@
 package base;
 import java.util.ArrayList;
 
-import l.EntAnnotation;
+import annotation.EntAnnotation;
 
 
 public class Entity {

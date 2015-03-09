@@ -1,0 +1,19 @@
+----------------------------------------------------------------
+Sun Mar 08 17:33:09 CDT 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014b-fb85-410a-000006a34078 
+on database directory /home/ryan/workspace/bioER/lib/db-derby-10.11.1.1-bin/demo/derbsTest/firstdb with class loader sun.misc.Launcher$AppClassLoader@55f96302 
+Loaded from file:/home/ryan/workspace/bioER/lib/db-derby-10.11.1.1-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_31-b13
+user.dir=/home/ryan/workspace/bioER/lib/db-derby-10.11.1.1-bin/demo/derbsTest
+os.name=Linux
+os.arch=amd64
+os.version=3.13.0-24-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sun Mar 08 17:34:09 CDT 2015: Shutting down Derby engine
+----------------------------------------------------------------
+Sun Mar 08 17:34:09 CDT 2015:
+Shutting down instance a816c00e-014b-fb85-410a-000006a34078 on database directory /home/ryan/workspace/bioER/lib/db-derby-10.11.1.1-bin/demo/derbsTest/firstdb with class loader sun.misc.Launcher$AppClassLoader@55f96302 
+----------------------------------------------------------------
