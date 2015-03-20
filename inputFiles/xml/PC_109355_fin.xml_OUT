@@ -1,0 +1,102 @@
+In UNASSIGNED: 
+	GUS(1) w/ aliases []
+	LEAFY(1) w/ aliases [LFY, LEAFY]
+	SAM(1) w/ aliases []
+	LBS(1) w/ aliases []
+
+
+In abstract: 
+	TERMINAL(1) w/ aliases []
+	LOCUS(2) w/ aliases []
+	LEAFY(3) w/ aliases [LFY, LEAFY]
+	FLOWER1(6) w/ aliases [FLOWER1, left, TFL1]
+	PARALOG(1) w/ aliases [PARALOG, FDP]
+	FLOWERING(2) w/ aliases []
+
+
+In UNASSIGNED: 
+	GUS(1) w/ aliases []
+	LEAFY(1) w/ aliases [LFY, LEAFY]
+	SAM(1) w/ aliases []
+	LBS(1) w/ aliases []
+
+
+In introduction: 
+	PARALOG(2) w/ aliases [PARALOG, FDP]
+	SAM(1) w/ aliases []
+	SCHLAFMUTZE(1) w/ aliases []
+	FRUITFULL(1) w/ aliases []
+	LOCUS(2) w/ aliases []
+	SUPPRESSOR(1) w/ aliases []
+	APETALA1(1) w/ aliases [APETALA1, AP1]
+	LEAFY(9) w/ aliases [LFY, LEAFY]
+	TSF(1) w/ aliases []
+	CONSTANS1(3) w/ aliases [SOC1, CONSTANS1]
+	FLOWERING(2) w/ aliases []
+	OVEREXPRESSION(1) w/ aliases []
+	CAULIFLOWER(1) w/ aliases []
+	TERMINAL(1) w/ aliases []
+	FLOWER1(8) w/ aliases [FLOWER1, left, TFL1]
+
+
+In results: 
+	PARALOG(13) w/ aliases [PARALOG, FDP]
+	SAM(6) w/ aliases []
+	PNF(1) w/ aliases []
+	GUS(5) w/ aliases []
+	TRUSS(1) w/ aliases [SFT, TRUSS]
+	LEAFY(32) w/ aliases [LFY, LEAFY]
+	LBSI(2) w/ aliases []
+	PCR(2) w/ aliases []
+	FLAG(1) w/ aliases []
+	LBSII(1) w/ aliases []
+	PENNYWISE(2) w/ aliases [PNY, PENNYWISE]
+	FLOWER1(73) w/ aliases [FLOWER1, left, TFL1]
+	POUNDFOOLISH(1) w/ aliases []
+	LBS(4) w/ aliases []
+	ATC(1) w/ aliases []
+
+
+In discussion: 
+	SAM(3) w/ aliases []
+	DISCUSSION(1) w/ aliases []
+	LEAFY(6) w/ aliases [LFY, LEAFY]
+	TRUSS(3) w/ aliases [SFT, TRUSS]
+	CONSTANS1(1) w/ aliases [SOC1, CONSTANS1]
+	FLOWER(1) w/ aliases []
+	SINGLE(1) w/ aliases []
+	FLOWER1(19) w/ aliases [FLOWER1, left, TFL1]
+	SPL(1) w/ aliases []
+
+
+In methods: 
+	TILLING(1) w/ aliases []
+	ATG(1) w/ aliases []
+	LEAFY(4) w/ aliases [LFY, LEAFY]
+	FLAG(3) w/ aliases []
+	TBS(1) w/ aliases []
+	PCR(8) w/ aliases []
+	SYBR(2) w/ aliases []
+	PARALOG(2) w/ aliases [PARALOG, FDP]
+	HPO(2) w/ aliases []
+	SIMANN(1) w/ aliases []
+	FLOWER1(2) w/ aliases [FLOWER1, left, TFL1]
+	GUS(2) w/ aliases []
+	FAA(1) w/ aliases []
+	LSODE(1) w/ aliases []
+	HSP101(1) w/ aliases []
+	ODEPACK(1) w/ aliases []
+	LBS(1) w/ aliases []
+	SSC(4) w/ aliases [SSC, 55°C]
+	TUB6(1) w/ aliases [At5g12250, TUB6]
+	PBS(3) w/ aliases []
+	DIG(1) w/ aliases []
+
+
+In UNASSIGNED: 
+	GUS(1) w/ aliases []
+	LEAFY(1) w/ aliases [LFY, LEAFY]
+	SAM(1) w/ aliases []
+	LBS(1) w/ aliases []
+
+

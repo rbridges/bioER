@@ -25,8 +25,6 @@ public class EntManager {
 		aliasManager.pair(master,alias);
 	}
 	
-	
-	
 	public EntList getEntList()
 	{
 		return eList;

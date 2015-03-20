@@ -28,13 +28,14 @@ public class AnnotatableDocument {
 	 * No Annotations. 
 	 * @param d The javax document from which the AD is built
 	 * @param type The informal name for this AD (for intuitive differentiation)*/
-	AnnotatableDocument(Node d, String type)
+	AnnotatableDocument(Document d, String type)
 	{
 		sections = new Hashtable<Integer, SectionContainer>();
-		doc = (Document) d;
-		String uncleanedText = doc.getElementsByTagName("article").item(0).getTextContent();
-		textSnapShot = clean(uncleanedText);
-		getSections(d);
+		
+//		doc = (Document) d;
+//		String uncleanedText = doc.getElementsByTagName("article").item(0).getTextContent();
+//		textSnapShot = clean(uncleanedText);
+//		getSections(d);
 		
 		eManager = new EntManager( d.getLocalName() );
 		metaData = new Hashtable<String, Integer>();
@@ -105,6 +106,73 @@ public class AnnotatableDocument {
 //				}
 //				///
 		
+				
+					
+				informalSectionName = getInformalSectionName(tempNode,path,informalSectionName);
+					
+				loadup(tempNode, path, informalSectionName);
+			
+				// associate the section number with a SectionContainer with copy of node and the path.
+				// deep copied the node to separate the text and attribute data I want from ""s left to remedy double counting entities
+				if(!tempNode.getTextContent().equals(""))
+				{
+					int relevance = getSectionRelevance(path);
+					sections.put(special_number, new SectionContainer(
+							tempNode.cloneNode(true), path, special_number, relevance));
+					
+					if(informalSections.isEmpty())
+					{
+						informalSections.add(informalSectionName);
+					}
+					if(!informalSections.get(informalSections.size()-1).equals(informalSectionName))
+					{
+						informalSections.add(informalSectionName);
+					}
+					
+					markInformalSection(informalSectionName);
+					special_number++;
+				}
+				
+				// clear out the text at the bottom of the recrusion tree as to not double count as we ascend back up
+				tempNode.setTextContent("");
+			
+				//"pop" off the last layer when you are done with it's children
+				if(path.size()>0) path.remove( path.size()-1 );
+				
+			}	
+		}		
+	}
+	
+	
+	private void getSections2(Node d)
+	{
+		ArrayList<String> path = new ArrayList<String>();
+		path.add(d.getNodeName());
+		
+		
+		loadup2(d, path, "UNASSIGNED");
+		special_number = 0;
+	}
+	/**This one uses the assumption that all the text content will be in leaf nodes
+	 * 
+	 * @param node
+	 * @param path
+	 * @param informalSectionName
+	 */
+	private void loadup2(Node node, ArrayList<String> path, String informalSectionName)
+	{
+		NodeList nodeList = node.getChildNodes();
+		for (int count = 0; count < nodeList.getLength(); count++) {
+			
+			Node tempNode = nodeList.item(count);
+			// make sure it's an "element node" as opposed to Type, Notation, Position, etc. .
+			//if (!(tempNode.getNodeType() == Node.ELEMENT_NODE) ) continue;
+			
+			if (tempNode.hasChildNodes())
+			{
+				
+				path.add(tempNode.getNodeName());
+				
 				
 					
 				informalSectionName = getInformalSectionName(tempNode,path,informalSectionName);

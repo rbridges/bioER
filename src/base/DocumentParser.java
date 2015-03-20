@@ -187,7 +187,9 @@ public class DocumentParser {
 					printNodeList(tempNode.getChildNodes());
 			}
 				System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
-			}
+		}
+	    
+	    
 	}
 	
 

@@ -48,7 +48,6 @@ public class EntList {
 		nameIndex = new Hashtable<String, ArrayList<Integer> >();
 		sectionIndex = new Hashtable<Integer, ArrayList<Integer> >();
 		
-		
 	}
 	
 	public Entity getByIndex(int index)

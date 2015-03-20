@@ -30,7 +30,12 @@ public class bioER {
 	{
 		// inputFiles/xml/PC_108688_fin.xml
 		
-		dataBaseDemo();
+		try {
+			demo5();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 	}
@@ -39,7 +44,7 @@ public class bioER {
 //	public static void demo(DocumentParser p)
 //	{
 //		Scanner scan = null;
-//		EntManager eManager = new EntManager();
+//		EntManager eManager = new EntManager();[
 //		try 
 //		{
 //			scan = new Scanner(new File ("regexPatterns.txt"));
@@ -231,6 +236,33 @@ public class bioER {
 		System.out.println( dbm.seeTable("entities") );
 		
 		dbm.shutDown();
+	}
+	
+	public static void contextDemo() throws IOException
+	{
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Give an xml or gml filename: ");
+		String fileName = scan.next();
+		
+		DocumentParser p = new DocumentParser();
+		Annotator annotator = new Annotator();
+		AnnotatableDocument d = p.getAnnotatableDoc(fileName);
+		annotator.annotate(d);
+		
+		FileWriter fw1 = new FileWriter("one.txt");
+		FileWriter fw2 = new FileWriter("two.txt");
+		fw1.write( d.getFullText() );
+		
+		Hashtable<Integer, base.SectionContainer> sections = d.getSections();
+		for( int i = 0; i<sections.size(); i++ )
+		{
+			fw2.write(( sections.get(i).getText() + "\n" ) );
+		}
+		
+		fw1.close();
+		fw2.close();
+		
+		
 	}
 
 }

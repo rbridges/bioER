@@ -1,0 +1,76 @@
+In UNASSIGNED: 
+	GUS(1) w/ aliases []
+	MADS(1) w/ aliases []
+	TPM(1) w/ aliases []
+
+
+In abstract: 
+	MADS(5) w/ aliases []
+	VERDANDI(7) w/ aliases [VDD, VERDANDI]
+	SEEDSTICK(2) w/ aliases [SEEDSTICK, STK]
+	SEPALLATA3(2) w/ aliases [E, SEP3, SEPALLATA3]
+	REM(1) w/ aliases []
+	MIKC(1) w/ aliases []
+
+
+In UNASSIGNED: 
+	GUS(1) w/ aliases []
+	MADS(1) w/ aliases []
+	TPM(1) w/ aliases []
+
+
+In introduction: 
+	SEPALLATA3(4) w/ aliases [E, SEP3, SEPALLATA3]
+	ABC(2) w/ aliases []
+	VERDANDI(8) w/ aliases [VDD, VERDANDI]
+	SEP1(1) w/ aliases []
+	SEPALLATA(1) w/ aliases []
+	SEP(2) w/ aliases []
+	MERISTEM(1) w/ aliases []
+	MADS(15) w/ aliases []
+	SEEDSTICK(7) w/ aliases [SEEDSTICK, STK]
+	SHATTERPROOF1(5) w/ aliases [SHP1, SHATTERPROOF1]
+	SHP2(4) w/ aliases []
+
+
+In results: 
+	TPM(13) w/ aliases []
+	SEPALLATA3(25) w/ aliases [E, SEP3, SEPALLATA3]
+	GUS(52) w/ aliases []
+	VERDANDI(47) w/ aliases [VDD, VERDANDI]
+	VISTA(1) w/ aliases []
+	PCR(1) w/ aliases []
+	MADS(2) w/ aliases []
+	ATG(2) w/ aliases []
+	SEEDSTICK(24) w/ aliases [SEEDSTICK, STK]
+
+
+In discussion: 
+	GUS(1) w/ aliases []
+	SEP(1) w/ aliases []
+	VERDANDI(25) w/ aliases [VDD, VERDANDI]
+	MADS(11) w/ aliases []
+	SEEDSTICK(15) w/ aliases [SEEDSTICK, STK]
+	SEPALLATA3(11) w/ aliases [E, SEP3, SEPALLATA3]
+	TPM(5) w/ aliases []
+
+
+In methods: 
+	TPM(3) w/ aliases []
+	SEPALLATA3(9) w/ aliases [E, SEP3, SEPALLATA3]
+	SYBR(1) w/ aliases []
+	GUS(5) w/ aliases []
+	BASTA(1) w/ aliases []
+	VERDANDI(6) w/ aliases [VDD, VERDANDI]
+	VISTA(1) w/ aliases []
+	PCR(4) w/ aliases []
+	MPIPZ(1) w/ aliases []
+	SEEDSTICK(10) w/ aliases [SEEDSTICK, STK]
+
+
+In UNASSIGNED: 
+	GUS(1) w/ aliases []
+	MADS(1) w/ aliases []
+	TPM(1) w/ aliases []
+
+
