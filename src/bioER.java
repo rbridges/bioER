@@ -17,11 +17,13 @@ import utils.NameSet;
 import utils.NumberedSet;
 import base.AnnotatableDocument;
 import base.Annotator;
+import base.DocumentScanner;
 import base.EntList;
 import base.EntManager;
 //import base.EntManager;
 import base.Entity;
 import base.DocumentParser;
+import base.SectionContainer;
 import base.Visualizer;
 
 
@@ -30,12 +32,7 @@ public class bioER {
 	{
 		// inputFiles/xml/PC_108688_fin.xml
 		
-		try {
-			demo5();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		parsingTest2();
 		
 		
 	}
@@ -262,7 +259,78 @@ public class bioER {
 		fw1.close();
 		fw2.close();
 		
-		
 	}
+	
+	public static void parsingTest()
+	{
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Give an xml or gml filename: ");
+		String fileName = scan.next();
+		
+		DocumentParser p = new DocumentParser();
+		Annotator annotator = new Annotator();
+		AnnotatableDocument d = p.getAnnotatableDoc(fileName);
+		Hashtable<Integer,SectionContainer> sections = p.sections;
+		
+		StringBuilder rootSB = new StringBuilder();
+		StringBuilder sectionsSB = new StringBuilder();
+		
+		for(int i=0; i<sections.size(); i++)
+		{
+			sectionsSB.append(( sections.get(i).getText().replaceAll("\\[~~.+?\\|", "")
+					.replaceAll("\\|.+?~~\\]", "") + " ") );
+		}
+		String sectionsWOtags[] = sectionsSB.toString().split(" ");
+		StringBuilder sectionsSB2 = new StringBuilder();
+		for(int i=0; i<sectionsWOtags.length;i++)
+		{
+			String token = sectionsWOtags[i];
+			if(token.equals("") || token.equals(" "))
+			{
+				continue;
+			}
+			sectionsSB2.append(token+" ");
+		}
+		
+		String rootText = p.tempTextSnapShot;
+		rootText = rootText.replace("\\[~~.+?\\|", "").replaceAll("\\|.+?~~\\]", "");
+		String splitRootText[] = rootText.split(" ");
+		for(int i=0; i<splitRootText.length; i++)
+		{
+			String token = splitRootText[i];
+			if(token.equals("") || token.equals(" "))
+			{
+				continue;
+			}
+			rootSB.append(token+" ");
+		}
+
+		String roots[] = rootSB.toString().split(" ");
+		String sectionss[] = sectionsSB2.toString().split(" ");
+		
+		System.out.println(roots.equals(sectionss));
+	
+		
+		for(int i=0; i<roots.length; i++)
+		{
+			if(!roots[i].equals(sectionss[i]))
+			{
+				System.out.println("|"+roots[i]+"| |"+sectionss[i]+"|");
+			}
+			
+		}
+	
+	}
+	
+	public static void parsingTest2()
+	{
+		DocumentParser dp = new DocumentParser();
+		dp.getAnnotatableDoc(("inputFiles/xml/1074.xml"));
+		for(int i=0; i<dp.sections.size(); i++)
+		{
+			System.out.println( dp.sections.get(i).getText() );
+		}
+	}
+	
 
 }
