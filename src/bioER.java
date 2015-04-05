@@ -329,11 +329,7 @@ public class bioER {
 		DocumentParser dp = new DocumentParser();
 		Annotator annotator = new Annotator();
 		AnnotatableDocument d = dp.getAnnotatableDoc(("inputFiles/xml/PC_108688_fin.xml"));
-//		for(int i=0; i<dp.sections.size(); i++)
-//		{
-//			System.out.println( dp.sections.get(i).toString() );
-//			System.out.println( dp.sections.get(i).getText()+"\n\n");
-//		}
+
 		annotator.textTableauAnnotate(d);
 		
 		ArrayList<Entity> ents = d.getEntManager().getEntList().getEntList();
@@ -349,6 +345,20 @@ public class bioER {
 //		System.out.println( "is in " + tt.getFormatting(start) );
 //		int sentence = tt.getContainingSentence(start+1);
 //		System.out.println( tt.getSentences(sentence,sentence) );
+		
+	}
+	
+	public static void textTableauDemo(String fileName)
+	{
+		DocumentParser dp = new DocumentParser();
+		Annotator annotator = new Annotator();
+		AnnotatableDocument d = dp.getAnnotatableDoc((fileName));
+
+		annotator.textTableauAnnotate(d);
+		
+		TextTableau tt = d.textTableau;
+		
+		
 		
 	}
 	

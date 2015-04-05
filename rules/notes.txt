@@ -1,0 +1,1 @@
+When hardcoding "graphic" as a nested term, got an imbalanced tag issue, because graphic is a self closed tag, i.e. <graphic atr1=asdf /> without any text
