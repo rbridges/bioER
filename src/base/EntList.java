@@ -119,6 +119,7 @@ public class EntList {
 		
 		
 		
+		
 		//now that we've indexed by name and section, just add to the master list
 		entTable.put(addEntIndex++,ent);
 	}

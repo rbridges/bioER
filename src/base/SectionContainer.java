@@ -6,9 +6,10 @@ import org.w3c.dom.Node;
 
 public class SectionContainer {
 	private Node n;
-	private ArrayList<String> path;
+	private ArrayList<NodeBundle> path;
 	private String text;
 	private int sectionNumber;
+	String informalSectionName;
 	
 	private int relevance;
 //	
@@ -16,13 +17,10 @@ public class SectionContainer {
 //		return n;
 //	}
 
-	public ArrayList<String> getPath() {
+	public ArrayList<NodeBundle> getPath() {
 		return path;
 	}
 
-	public void setPath(ArrayList<String> path) {
-		this.path = path;
-	}
 
 	public String getText() {
 		return text;
@@ -45,11 +43,13 @@ public class SectionContainer {
 
 
 	
-	public SectionContainer(Node _n, ArrayList<String> _path, int _sectionNumber, int _relevance)
+	public SectionContainer(Node _n, ArrayList<NodeBundle> _path, String _informalSectionName,
+			int _sectionNumber, int _relevance)
 	{
 		n = _n;
 		sectionNumber = _sectionNumber;
-		path = new ArrayList<String> (_path);
+		path = new ArrayList<NodeBundle> (_path);
+		informalSectionName = _informalSectionName;
 		text = new String(n.getTextContent());
 		relevance = _relevance;
 	//	System.out.println(n.getNodeName() + " : " + text + " @ " + path);
@@ -60,8 +60,11 @@ public class SectionContainer {
 	{
 		return relevance;
 	}
+	public String getInformalSectionName()
+	{
+		return informalSectionName;
+	}
 	
-	@Override
 	public String toString()
 	{
 		if(path.size() == 0)
@@ -70,8 +73,9 @@ public class SectionContainer {
 		}
 		
 		StringBuilder sb = new StringBuilder();
-		for(String s : path)
+		for(NodeBundle nb : path)
 		{
+			String s = nb.toString();
 			sb.append(s);
 			sb.append("/");
 		}

@@ -33,8 +33,9 @@ public class Visualizer {
 			{
 				SectionContainer sc = sectionContainers.get(i);
 				StringBuilder sb = new StringBuilder();
-				for( String s : sc.getPath() )
+				for( NodeBundle nb : sc.getPath() )
 				{
+					String s = nb.getName();
 					sb.append(s);
 					sb.append("/");
 				}
@@ -345,11 +346,12 @@ public class Visualizer {
 		
 	}
 	
-	private String arrayString(ArrayList<String> array)
+	private String arrayString(ArrayList<NodeBundle> array)
 	{
 		StringBuilder sb = new StringBuilder();
-		for(String s : array )
+		for(NodeBundle nb : array )
 		{
+			String s = nb.getName();
 			sb.append(s);
 			sb.append("/");
 		}

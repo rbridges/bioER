@@ -24,6 +24,7 @@ import base.EntManager;
 import base.Entity;
 import base.DocumentParser;
 import base.SectionContainer;
+import base.TextTableau;
 import base.Visualizer;
 
 
@@ -248,7 +249,8 @@ public class bioER {
 		
 		FileWriter fw1 = new FileWriter("one.txt");
 		FileWriter fw2 = new FileWriter("two.txt");
-		fw1.write( d.getFullText() );
+		// use getAllTokens getFullText
+		//fw1.write( d.getFullText() );
 		
 		Hashtable<Integer, base.SectionContainer> sections = d.getSections();
 		for( int i = 0; i<sections.size(); i++ )
@@ -325,11 +327,29 @@ public class bioER {
 	public static void parsingTest2()
 	{
 		DocumentParser dp = new DocumentParser();
-		dp.getAnnotatableDoc(("inputFiles/xml/1074.xml"));
-		for(int i=0; i<dp.sections.size(); i++)
+		Annotator annotator = new Annotator();
+		AnnotatableDocument d = dp.getAnnotatableDoc(("inputFiles/xml/PC_108688_fin.xml"));
+//		for(int i=0; i<dp.sections.size(); i++)
+//		{
+//			System.out.println( dp.sections.get(i).toString() );
+//			System.out.println( dp.sections.get(i).getText()+"\n\n");
+//		}
+		annotator.textTableauAnnotate(d);
+		
+		ArrayList<Entity> ents = d.getEntManager().getEntList().getEntList();
+		for(Entity e : ents)
 		{
-			System.out.println( dp.sections.get(i).getText() );
+				System.out.println(e.getType() + " : " + e.getText());
 		}
+		
+		
+//		TextTableau tt = d.textTableau;
+//		int start = 5325;
+//		System.out.println( tt.getTokens(start, start+2) );
+//		System.out.println( "is in " + tt.getFormatting(start) );
+//		int sentence = tt.getContainingSentence(start+1);
+//		System.out.println( tt.getSentences(sentence,sentence) );
+		
 	}
 	
 

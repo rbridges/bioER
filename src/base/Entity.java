@@ -6,6 +6,8 @@ import annotation.EntAnnotation;
 
 public class Entity {
 	private String text;
+	private String type;
+	private int sectionNumber;
 	private SectionContainer location;
 	private int startPosition;
 	private int endPosition;
@@ -15,6 +17,7 @@ public class Entity {
 	private ArrayList<String> foundByList;
 	
 	private EntAnnotation eAnnotation;
+	
 	
 //	Entity()
 //	{
@@ -27,6 +30,17 @@ public class Entity {
 	{
 		text = _text;
 		location = _location;
+		startPosition = start;
+		endPosition = end;
+		
+		foundByList = new ArrayList<String>();
+		
+		eAnnotation = new EntAnnotation();
+	}
+	Entity(String _text, int _sectionNumber, int start, int end)
+	{
+		text = _text;
+		sectionNumber = _sectionNumber;
 		startPosition = start;
 		endPosition = end;
 		
@@ -48,12 +62,8 @@ public class Entity {
 		this.text = text;
 	}
 
-	public ArrayList<String> getLocation() {
+	public ArrayList<NodeBundle> getLocation() {
 		return location.getPath();
-	}
-
-	public void setLocation(ArrayList<String> location) {
-		this.location.setPath(location);
 	}
 
 	public double getPosition() 
@@ -73,7 +83,7 @@ public class Entity {
 
 	public int getSectionNumber()
 	{
-		return location.getSectionNumber();
+		return sectionNumber;
 	}
 	
 	public ArrayList<String> getFoundByList()
@@ -93,5 +103,13 @@ public class Entity {
 	public int getId()
 	{
 		return id;
+	}
+	public void setIsA(String _type) {
+		type = _type;
+	}
+	
+	public String getType()
+	{
+		return type;
 	}
 }

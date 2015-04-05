@@ -64,12 +64,16 @@ public class DocumentParser {
 			tempTextSnapShot = ((Node)c).getTextContent();
 			///////
 			
+
 		markNestedTags(d);
 		getPreDefinedSections(d);
 	
 
-		//TODO: change this constructor to take list of sections, also, why "sgml?"
-		return new AnnotatableDocument(d,"smgl?");
+		// old way
+		//return new AnnotatableDocument(d,"smgl?");
+
+		// new way
+		return new AnnotatableDocument(sections, informalSections);
 	}
 
 	//TODO: sustainable conversion
@@ -162,8 +166,8 @@ public class DocumentParser {
 				sb.append(" |");
 				sb.append(n.getNodeName());
 				sb.append("~~]");
-				n.setTextContent(sb.toString());
-				
+				//System.out.println(sb.toString().trim());
+				n.setTextContent(sb.toString().trim());
 			}
 		}
 		
@@ -174,7 +178,6 @@ public class DocumentParser {
 	// remove spaces and empty strings from the text
 	private String clean(String unCleaned)
 	{
-		
 		StringBuilder sb = new StringBuilder();
 		for(String t : unCleaned.split(" "))
 		{
@@ -188,72 +191,69 @@ public class DocumentParser {
 		return sb.toString();
 	}
 	
-	@Deprecated
-	private void getSections(Node d)
-	{
-		ArrayList<String> path = new ArrayList<String>();
-		path.add(d.getNodeName());
-
-		
-		loadup(d, path, "UNASSIGNED");
-		sectionNumber = 0;
-	}
-	@Deprecated
-	private void loadup(Node node, ArrayList<String> path, String informalSectionName)
-	{
-		NodeList nodeList = node.getChildNodes();
-		for (int count = 0; count < nodeList.getLength(); count++) {
-			
-			Node tempNode = nodeList.item(count);
-			// make sure it's an "element node" as opposed to Type, Notation, Position, etc. .
-			//if (!(tempNode.getNodeType() == Node.ELEMENT_NODE) ) continue;
-			
-			if (tempNode.hasChildNodes())
-			{
-				
-				path.add(tempNode.getNodeName());
-								
-					
-				informalSectionName = getInformalSectionName(tempNode,path,informalSectionName);
-					
-				loadup(tempNode, path, informalSectionName);
-			
-				// associate the section number with a SectionContainer with copy of node and the path.
-				// deep copied the node to separate the text and attribute data I want from ""s left to remedy double counting entities
-				if(!tempNode.getTextContent().equals(""))
-				{
-					int relevance = getSectionRelevance(path);
-					sections.put(sectionNumber, new SectionContainer(
-							tempNode.cloneNode(true), path, sectionNumber, relevance));
-					
-					if(informalSections.isEmpty())
-					{
-						informalSections.add(informalSectionName);
-					}
-					if(!informalSections.get(informalSections.size()-1).equals(informalSectionName))
-					{
-						informalSections.add(informalSectionName);
-					}
-					
-					markInformalSection(informalSectionName);
-					sectionNumber++;
-				}
-				
-				// clear out the text at the bottom of the recrusion tree as to not double count as we ascend back up
-				tempNode.setTextContent("");
-			
-				//"pop" off the last layer when you are done with it's children
-				if(path.size()>0) path.remove( path.size()-1 );
-				
-			}	
-		}		
-	}
-	
+//	@Deprecated
+//	private void getSections(Node d)
+//	{
+//		ArrayList<String> path = new ArrayList<String>();
+//		path.add(d.getNodeName());
+//
+//		
+//		loadup(d, path, "UNASSIGNED");
+//		sectionNumber = 0;
+//	}
+//	@Deprecated
+//	private void loadup(Node node, ArrayList<String> path, String informalSectionName)
+//	{
+//		NodeList nodeList = node.getChildNodes();
+//		for (int count = 0; count < nodeList.getLength(); count++) {
+//			
+//			Node tempNode = nodeList.item(count);
+//			// make sure it's an "element node" as opposed to Type, Notation, Position, etc. .
+//			//if (!(tempNode.getNodeType() == Node.ELEMENT_NODE) ) continue;
+//			
+//			if (tempNode.hasChildNodes())
+//			{
+//				
+//				path.add(tempNode.getNodeName());
+//								
+//					
+//				informalSectionName = getInformalSectionName(tempNode,path,informalSectionName);
+//					
+//				loadup(tempNode, path, informalSectionName);
+//			
+//				// associate the section number with a SectionContainer with copy of node and the path.
+//				// deep copied the node to separate the text and attribute data I want from ""s left to remedy double counting entities
+//				if(!tempNode.getTextContent().equals(""))
+//				{
+//					int relevance = getSectionRelevance(path);
+//					sections.put(sectionNumber, new SectionContainer(
+//							tempNode.cloneNode(true), path, sectionNumber, relevance));
+//					
+//					if(informalSections.isEmpty())
+//					{
+//						informalSections.add(informalSectionName);
+//					}
+//					if(!informalSections.get(informalSections.size()-1).equals(informalSectionName))
+//					{
+//						informalSections.add(informalSectionName);
+//					}
+//					
+//					markInformalSection(informalSectionName);
+//					sectionNumber++;
+//				}
+//				
+//				// clear out the text at the bottom of the recrusion tree as to not double count as we ascend back up
+//				tempNode.setTextContent("");
+//			
+//				//"pop" off the last layer when you are done with it's children
+//				if(path.size()>0) path.remove( path.size()-1 );
+//				
+//			}	
+//		}		
+//	}
 	
 	private void getPreDefinedSections(Node d)
 	{
-		ArrayList<String> path = new ArrayList<String>();
-		
 		// pick out the abstract and add it
 		NodeList abstracts = ((Document) d).getElementsByTagName("abstract");
 		int numberOfAbstracts = abstracts.getLength();
@@ -261,17 +261,25 @@ public class DocumentParser {
 		{
 			numberOfAbstracts--; // to adjust to 0 indexing
 			Node abstrackt = abstracts.item(numberOfAbstracts); // appears the last abstract has the most content
-			int relevance = getSectionRelevance(path);
+			ArrayList<NodeBundle> abs = new ArrayList<NodeBundle>();
+			abs.add( new NodeBundle("abstract") );
+			int relevance = getSectionRelevance(abs);
+			
 			sections.put(sectionNumber, new SectionContainer(
-					abstrackt.cloneNode(true), path, sectionNumber, relevance));
+					abstrackt.cloneNode(true), abs , "abstract",
+					sectionNumber, relevance));
+	
+			informalSections.add("abstract");
+			markInformalSection("abstract");
 			sectionNumber++;
 		}
 		////////
 		
 		// pick out "body" and parse it
+		ArrayList<NodeBundle> path = new ArrayList<NodeBundle>();
 		Node body = ((Document)d).getElementsByTagName("body").item(0);
-		path.add(body.getNodeName());
-		loadupPreDefined(body, path);
+		path.add( new NodeBundle(body) );
+		loadupPreDefined(body, path, "abstract");
 		
 		sectionNumber = 0;
 	}
@@ -279,7 +287,7 @@ public class DocumentParser {
 	 * and that no further granularity (other than "nested sections") is needed
 	 */
 	 
-	private void loadupPreDefined(Node node, ArrayList<String> path)
+	private void loadupPreDefined(Node node, ArrayList<NodeBundle> path, String informalSectionName)
 	{
 		NodeList nodeList = node.getChildNodes();
 		for (int count = 0; count < nodeList.getLength(); count++) 
@@ -287,32 +295,57 @@ public class DocumentParser {
 			Node tempNode = nodeList.item(count);
 			String nodeName = tempNode.getNodeName();
 
-			if(tempNode.getNodeName().equals("p") || tempNode.getNodeName().equals("title"))
+			if(tempNode.getNodeName().equals("p") || tempNode.getNodeName().equals("title")
+					|| tempNode.getNodeName().equals("fig") )
 			{
+				NodeBundle nb = new NodeBundle(nodeName);
+				path.add( nb );
+				informalSectionName = getInformalSectionName(tempNode,path,informalSectionName);
+				
 				int relevance = getSectionRelevance(path);
 				sections.put(sectionNumber, new SectionContainer(
-						tempNode.cloneNode(true), path, sectionNumber, relevance));
+						tempNode.cloneNode(true), path, informalSectionName, sectionNumber, relevance));
 
+				/////// quick and dirty way to keep track of "informal" section names
+				if(informalSections.isEmpty())
+				{
+					informalSections.add(informalSectionName);
+				}
+				if(!informalSections.get(informalSections.size()-1).equals(informalSectionName))
+				{
+					informalSections.add(informalSectionName);
+				}
+				///////////////////
+				
+				markInformalSection(informalSectionName);
+				path.remove( path.size()-1 );
 				sectionNumber++;
-				if(path.size()>0) path.remove( path.size()-1 );
+				
 				continue;
 			}
 			
-			path.add(tempNode.getNodeName());
-			loadupPreDefined(tempNode, path);
+			// augments the path, NodeBundle takes care of whether there are attributes or not
+			path.add( new NodeBundle(tempNode));
+
 			
-				
+			loadupPreDefined(tempNode, path, informalSectionName);
+			if(path.size()>0) 
+				path.remove( path.size()-1 );
 		}		
 	}
 	
 	//TODO: idea undeveloped
-	private int getSectionRelevance(ArrayList<String> path)
+	private int getSectionRelevance(ArrayList<NodeBundle> path)
 	{
-		if(path.contains("abstract")) return 5; // 5 most important
-		if(path.contains("back")) return 0; // 0 means no entity importance
+		for(NodeBundle nb : path)
+		{
+			if(nb.getName().equals("abstract")) return 5; // 5 most important
+			if(nb.getName().equals("back")) return 0; // don't pay attention to back matter
+		}
 		return 3;
+
 	}
-	private String getInformalSectionName(Node tempNode, ArrayList<String> path, String currentName)
+	private String getInformalSectionName(Node tempNode, ArrayList<NodeBundle> path, String currentName)
 	{
 		if(path.contains("abstract")) return "abstract";
 		

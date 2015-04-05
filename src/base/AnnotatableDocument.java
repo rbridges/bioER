@@ -2,6 +2,7 @@ package base;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Scanner;
@@ -13,7 +14,11 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class AnnotatableDocument {
+public class AnnotatableDocument implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5661618631427083230L;
 	private Document doc;
 	private Hashtable<Integer, SectionContainer> sections;
 	
@@ -22,6 +27,7 @@ public class AnnotatableDocument {
 	private EntManager eManager;
 	private Hashtable<String,Integer> metaData;
 	
+	public TextTableau textTableau;
 	private String textSnapShot;
 	
 	private EntList italicsList;
@@ -43,10 +49,15 @@ public class AnnotatableDocument {
 		metaData = new Hashtable<String, Integer>();
 		italicsList = new EntList( "italics" );
 		
-	
-		
-		
-		
+	}
+	AnnotatableDocument(Hashtable<Integer,SectionContainer> _sections, ArrayList<String> informalSectionNames)
+	{
+		sections = _sections;
+		eManager = new EntManager( "default" );
+		metaData = new Hashtable<String, Integer>();
+		italicsList = new EntList( "italics" );
+			
+		textTableau = new TextTableau(_sections, informalSectionNames);
 	}
 	
 	
@@ -57,6 +68,10 @@ public class AnnotatableDocument {
 	public Document getDocument()
 	{
 		return doc;
+	}
+	public String getSentences(int start, int end)
+	{
+		return textTableau.getSentences(start, end);
 	}
 	
 	
@@ -86,11 +101,13 @@ public class AnnotatableDocument {
 		return eManager.getEntList().getEntList();
 	}
 	
-	public String getFullText()
+	public ArrayList<String> getFullText()
 	{
-		return textSnapShot;
+		return textTableau.allTokens();
 	}
 	
+	@Deprecated
+	// getting rid of the notion of separate lists of entities. Instead indexing a master list
 	public void addEntity(Entity ent, String whichList)
 	{
 //		if(whichList.equals("italics"))
@@ -155,23 +172,15 @@ public class AnnotatableDocument {
 	{
 		return informalSectionIndex.get(informalName);
 	}
+	public TextTableau getTextTableau() {
+		return textTableau;
+	}
+	public void addEntity(Entity newEnt) 
+	{
+		eManager.addEnt(newEnt);
+	}
 	
-//	private void consolodate(ArrayList<Entity> list)
-//	{
-//		if(list==null) return;
-//		
-//		int last = (int)list.get(0).getPosition();
-//		ArrayList<Entity> consoldateThese = new ArrayList<Entity>();
-//		for(Entity e : list)
-//		{
-//			if(e.getPosition() == last+1)
-//			{
-//				
-//			}
-//		}
-//		
-//		
-//	}
+
 
 	
 	

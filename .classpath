@@ -2,5 +2,14 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="/home/ryan/workspace/bioER/lib/cloning-1.8.5/cloning-1.8.5-sources.jar"/>
+	<classpathentry kind="lib" path="/home/ryan/workspace/bioER/lib/cloning-1.8.5/cloning-1.8.5.jar"/>
+	<classpathentry kind="lib" path="/home/ryan/workspace/bioER/lib/guava-jdk5-17.0.jar"/>
+	<classpathentry kind="lib" path="/home/ryan/workspace/bioER/lib/commons-io-2.4-bin.jar"/>
+	<classpathentry kind="lib" path="lib/db-derby-10.11.1.1-bin/lib/derby.jar"/>
+	<classpathentry kind="lib" path="lib/db-derby-10.11.1.1-bin/lib/derbyclient.jar"/>
+	<classpathentry kind="lib" path="lib/db-derby-10.11.1.1-bin/lib/derbynet.jar"/>
+	<classpathentry kind="lib" path="lib/db-derby-10.11.1.1-bin/lib/derbyrun.jar"/>
+	<classpathentry kind="lib" path="lib/db-derby-10.11.1.1-bin/lib/derbytools.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
